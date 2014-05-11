@@ -2,7 +2,6 @@
 http    = require('http')
 express = require('express')
 path    = require('path')
-crypto  = require('crypto')
 
 
 app = express()
@@ -22,17 +21,23 @@ webserver.listen(port)
 app.get '/', (req, res) ->
   res.render(path.join(staticPath, "index.html"))
 
+max = 10
+
+class Algorhythmic
+  getNum: (val) ->
+    newVal = val % max + 1
+
+    return newVal
+
+  compute: (arr) ->
+    arr.reduce (p, n) => return @getNum n.charCodeAt('0')
+
+a = new Algorhythmic()
+
 app.get '/avatar/:name', (req, res) ->
   str = req.params.name
-  id = Math.abs(parseInt(str.split('').reduce((previousValue, currentValue, index, array) ->
-    charValue = currentValue.charCodeAt('0')
-    if (index % 2 == 0)
-      val = previousValue + charValue
-    else
-      val = previousValue - charValue
-    return val
-  , 0)/10))
-  console.log id
+  stringArray = str.split('')
+  id = a.compute(stringArray)
   res.sendfile((path.join(staticPath, "img", "avatar#{id}.png")))
 
 
