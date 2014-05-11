@@ -30,7 +30,7 @@ class Algorhythmic
     return newVal
 
   compute: (arr) ->
-    arr.reduce (p, n) => return @getNum n.charCodeAt('0')
+    arr.reduce (p, n) => return @getNum(p + n.charCodeAt('0'))
 
 a = new Algorhythmic()
 
