@@ -26,18 +26,23 @@ max = 10
 class Algorhythmic
   getNum: (val) ->
     newVal = val % max + 1
-
     return newVal
 
   compute: (arr) ->
-    arr.reduce (p, n) => return @getNum(p + n.charCodeAt('0'))
+    arr.reduce (p, n, i) =>
+      p = parseInt p.charCodeAt('0') unless i > 1
+      n = parseInt n.charCodeAt('0')
+      return @getNum(p + n)
 
-a = new Algorhythmic()
+  convert: (string) ->
+    str = string
+    stringArray = str.split('')
+    id = a.compute(stringArray)
+
 
 app.get '/avatar/:name', (req, res) ->
-  str = req.params.name
-  stringArray = str.split('')
-  id = a.compute(stringArray)
+  a = new Algorhythmic()
+  id = a.convert(req.params.name)
   res.sendfile((path.join(staticPath, "img", "avatar#{id}.png")))
 
 
