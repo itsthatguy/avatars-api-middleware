@@ -27,13 +27,12 @@
     "gulp-util": "^2.2.14",
     "coffeeify": "^0.6.0",
     "stylus": "^0.42.3",
-    "win-spawn": "^2.0.0"
+    "win-spawn": "^2.0.0",
+    "gulp-livereload": "^1.3.1"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/itsthatguy/firepit.git"
   },
-  "devDependencies": {
-    "gulp-livereload": "^1.3.1"
-  }
+  "devDependencies": { }
 }
