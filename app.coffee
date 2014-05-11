@@ -37,7 +37,7 @@ class Algorhythmic
   convert: (string) ->
     str = string
     stringArray = str.split('')
-    id = a.compute(stringArray)
+    id = @compute(stringArray)
 
 
 app.get '/avatar/:name', (req, res) ->
