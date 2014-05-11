@@ -1,0 +1,1 @@
+module.exports = window.App = Ember.Application.create()
