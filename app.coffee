@@ -42,7 +42,8 @@ class Algorhythmic
 
 app.get '/avatar/:name', (req, res) ->
   a = new Algorhythmic()
-  id = a.convert(req.params.name)
+  name = req.params.name.replace(/\.(png|jpg|gif|)$/g, "")
+  id = a.convert(name)
   res.sendfile((path.join(staticPath, "img", "avatar#{id}.png")))
 
 
