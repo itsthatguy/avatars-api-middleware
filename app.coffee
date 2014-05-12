@@ -35,15 +35,19 @@ class Algorhythmic
       return @getNum(p + n)
 
   convert: (string) ->
-    str = string
+    str = string.replace(/\.(png|jpg|gif|)$/g, "")
     stringArray = str.split('')
     id = @compute(stringArray)
 
 
 app.get '/avatar/:name', (req, res) ->
   a = new Algorhythmic()
-  name = req.params.name.replace(/\.(png|jpg|gif|)$/g, "")
-  id = a.convert(name)
+  id = a.convert(req.params.name)
+  res.sendfile((path.join(staticPath, "img", "avatar#{id}.png")))
+
+app.get '/avatar/:size/:name', (req, res) ->
+  a = new Algorhythmic()
+  id = a.convert(req.params.name)
   res.sendfile((path.join(staticPath, "img", "avatar#{id}.png")))
 
 
