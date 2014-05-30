@@ -1,5 +1,4 @@
 
-
 class Algorhythmic
   max: 10
   getNum: (val) ->
