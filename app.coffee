@@ -1,7 +1,9 @@
 
-http    = require('http')
-express = require('express')
-path    = require('path')
+http        = require('http')
+express     = require('express')
+path        = require('path')
+gm          = require('gm')
+imageMagick = gm.subClass({ imageMagick: true })
 
 
 app = express()
@@ -39,16 +41,38 @@ class Algorhythmic
     stringArray = str.split('')
     id = @compute(stringArray)
 
+  parseSize: (size) ->
+    size = size.split("x")
+    return { width: size[0], height: size[1] }
 
+
+# Basic Route
 app.get '/avatar/:name', (req, res) ->
   a = new Algorhythmic()
   id = a.convert(req.params.name)
-  res.sendfile((path.join(staticPath, "img", "avatar#{id}.png")))
+  res.sendfile( path.join(staticPath, "img", "avatar#{id}.png") )
 
-app.get '/avatar/:size/:name', (req, res) ->
+# Route with custom Size
+app.get '/avatar/:size/:name', (req, res, next) ->
+
   a = new Algorhythmic()
   id = a.convert(req.params.name)
-  res.sendfile((path.join(staticPath, "img", "avatar#{id}.png")))
+  size = a.parseSize(req.params.size)
+  imgPath = path.join(staticPath, "img", "avatar#{id}.png")
+
+  cropOffset = { h: Math.max(0, size.height-size.width)/2, v: Math.max(0, size.width-size.height)/2 }
+  console.log cropOffset
+
+  imageMagick( imgPath )
+  .resize(size.width, size.height, "^")
+  .crop(size.width, size.height, cropOffset.h, cropOffset.v)
+  .autoOrient()
+  .stream 'png', (err, stdout) ->
+    return next(err) if (err)
+    res.setHeader('Expires', new Date(Date.now() + 604800000))
+    res.setHeader('Content-Type', 'image/png')
+    stdout.pipe(res)
+
 
 
 module.exports = webserver
