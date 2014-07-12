@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 
-var path = require('path');
-var spawn = require('win-spawn');
+// Environment Variables!
+var dotenv = require('dotenv');
+dotenv.load()
+
+var path  = require('path'),
+    spawn = require('win-spawn');
 
 
 basedir = path.join(__dirname, "node_modules", ".bin");
@@ -23,7 +27,6 @@ var runCommand = function(command, args) {
     console.log('Child process exited with code', code);
   });
 }
-
 
 runCommand("bower", ['install']);
 runCommand("gulp");
