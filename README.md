@@ -20,8 +20,6 @@ Use Adorable Avatars as a fallback and get rid of those boring gray silhouettes!
 
 ## How do I use it?
 
-### Setup
-
 1. Clone this repo
 2. Install dependencies: `npm install`
 3. Start the server: `npm start`
