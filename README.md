@@ -1,37 +1,41 @@
 # adorable-avatars
 
 ## What are avatars?
+Avatars are earthly creatures that serve as proxies for gods.
+In the web world, they just represent people, and they're usually small images. 
 
-Avatars are earthly creatures that serve as proxies for gods. In the web world, we have avatars to represent people. These avatars are usually small images. Some people use photographs of themselves as their avatar. Some people use caricatures of themselves as their avatar. Others pick their favorite superhero. The sky's the limit.
+Some use photographs of themselves as their avatar. Some people use caricatures of themselves. Others pick their favorite superhero. The sky's the limit.
 
-## What is an avatar service?
+## What's an avatar _service_?
+It answers the question "What is this user's avatar?"
+In this way, it provides a consistent representation of that user.
+Across _all_ websites that use that service. Pretty cool, right?
 
-An avatar service let's people upload their image to a single place and then any website that uses that service for avatars will represent their avatar consistently. Across all websites. That use that service. Pretty cool? But what if you haven't uploaded your image to that service? Then you typically get a really boring gray silhouette.
+But what if you haven't uploaded your image to that service?
+Then you get a really boring, gray silhouette.
 
-## What is the Adorable Avatar service?
-
-It is an interface to a better universe. With a simple route, your face will be filled with consistently-linked avatar glory!
+## So what's the Adorable Avatar service?
+It's an interface to a better universe. With a simple route, your face will be filled with consistently-linked avatar glory!
 
 _Consistently-linked avatar glory_ What?
 
-Whenever you make a request to Adorable Avatars, using an identifier like "abott@adorable.io," we give you an image for you to use on your page. Most importantly, it's the same image! Every. Single. Time.
+Whenever you make a request to Adorable Avatars, using an identifier like "abott@adorable.io," we give you an image for you to use on your page.
+Most importantly, it's the same image! Every. Single. Time.
 
 ## Why would I use it?
-Adorable Avatars is great for, well, avatars.
-When you're developing a feature like member lists or profiles, just give us your user's identifier and we'll give you their avatar image.
+What if you're developing a feature like member lists or profiles, but you don't have any images to use?
+Just give us your user's identifier and we'll give you their avatar image!
 That's it.
 
-Already have avatars implemented?
-Use Adorable Avatars as a fallback and get rid of those boring gray silhouettes!
+Already have avatars implemented in your application?
+Use Adorable Avatars as a fallback and get rid of those gray silhouettes!
 
 ## How do I use it?
-
 1. Clone this repo
 2. Install dependencies: `npm install`
 3. Start the server: `npm start`
 
 ### Requesting an Avatar
-
 The most basic request is of the following form:
 
     http://localhost:3002/avatar/<identifier>
