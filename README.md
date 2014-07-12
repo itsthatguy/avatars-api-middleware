@@ -7,7 +7,7 @@ your face will be filled with consistently-linked avatar glory!
 
 _Consistently-linked avatar glory_ What?
 
-Whenever you make a request to Adorable Avatars, using a string like
+Whenever you make a request to Adorable Avatars, using an identifier like
 "abott@adorable.io," we give you an image for you to use on your page. Most
 importantly, it's the same image! Every. Single. Time.
 
@@ -30,14 +30,14 @@ Already have avatars implemented? Use Adorable Avatars as a fallback and get rid
 
 The most basic request is of the following form:
 
-    http://localhost:3002/avatar/<somestring>
+    http://localhost:3002/avatar/<identifier>
 
-Where `somestring` is the identifier for your user (name, email, md5, etc.).
+Where `identifier` is the unique identifier for your user (name, email, md5, etc.).
 This will serve the image in its default size.
 
 To request an avatar with specific dimensions, use the following form:
 
-    http://localhost:3002/avatar/<dimensions>/<somestring>
+    http://localhost:3002/avatar/<dimensions>/<identifier>
 
 Where `dimensions` specifies the width and height, e.g. "300x300" or "400x200."
 
