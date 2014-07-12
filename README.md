@@ -1,14 +1,20 @@
 # adorable-avatars
 
-## What is it?
+## What are avatars?
 
-Adorable Avatars is an interface to a better universe.
-With a simple route, your face will be filled with consistently-linked avatar glory!
+Avatars are earthly creatures that serve as proxies for gods. In the web world, we have avatars to represent people. These avatars are usually small images. Some people use photographs of themselves as their avatar. Some people use caricatures of themselves as their avatar. Others pick their favorite superhero. The sky's the limit.
+
+## What is an avatar service?
+
+An avatar service let's people upload their image to a single place and then any website that uses that service for avatars will represent their avatar consistently. Across all websites. That use that service. Pretty cool? But what if you haven't uploaded your image to that service? Then you typically get a really boring gray silhouette.
+
+## What is the Adorable Avatar service?
+
+It is an interface to a better universe. With a simple route, your face will be filled with consistently-linked avatar glory!
 
 _Consistently-linked avatar glory_ What?
 
-Whenever you make a request to Adorable Avatars, using an identifier like "abott@adorable.io," we give you an image for you to use on your page.
-Most importantly, it's the same image! Every. Single. Time.
+Whenever you make a request to Adorable Avatars, using an identifier like "abott@adorable.io," we give you an image for you to use on your page. Most importantly, it's the same image! Every. Single. Time.
 
 ## Why would I use it?
 Adorable Avatars is great for, well, avatars.
