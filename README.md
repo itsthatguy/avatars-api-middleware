@@ -12,6 +12,11 @@ Whenever you make a request to Adorable Avatars, using a string like
 importantly, it's the same image! Every. Single. Time.
 
 ## Why would I use it?
+Adorable Avatars is great for, well, avatars.
+When you're developing a feature like member lists or profiles, just give us your user's identifier and we'll give you their avatar image.
+That's it.
+
+Already have avatars implemented? Use Adorable Avatars as a fallback and get rid of those boring gray silhouettes!
 
 ## How do I use it?
 
