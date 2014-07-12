@@ -2,6 +2,17 @@
 
 ## What is it?
 
+Adorable Avatars is an interface to a better universe. With a simple route,
+your face will be filled with consistently-linked avatar glory!
+
+_Consistently-linked avatar glory_ What?
+
+Whenever you make a request to Adorable Avatars, using a string like
+"abott@adorable.io," we give you an image for you to use on your page. Most
+importantly, it's the same image! Every. Single. Time.
+
+## Why would I use it?
+
 ## How do I use it?
 
 ### Setup
