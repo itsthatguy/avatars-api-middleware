@@ -15,7 +15,7 @@ class Algorhythmic
       currentChar  = @getCharInt(currentChar)
       return @getNum(previousChar + currentChar)
 
-  getCharInt: (char) -> parseInt char.charCodeAt('0') or 0
+  getCharInt: (char) -> parseInt char.charCodeAt(0) or 0
 
   convert: (string) ->
     str = string.replace(/\.(png|jpg|gif|)$/g, "")
