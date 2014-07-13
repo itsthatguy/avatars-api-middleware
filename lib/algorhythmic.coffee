@@ -6,10 +6,16 @@ class Algorhythmic
     return newVal
 
   compute: (arr) ->
-    arr.reduce (p, n, i) =>
-      p = parseInt p.charCodeAt('0') unless i > 1
-      n = parseInt n.charCodeAt('0')
-      return @getNum(p + n)
+    if arr.length == 1
+      char = @getCharInt(arr[0])
+      return @getNum(char)
+
+    arr.reduce (previousChar, currentChar, i) =>
+      previousChar = @getCharInt(previousChar) unless i > 1
+      currentChar  = @getCharInt(currentChar)
+      return @getNum(previousChar + currentChar)
+
+  getCharInt: (char) -> parseInt char.charCodeAt('0') or 0
 
   convert: (string) ->
     str = string.replace(/\.(png|jpg|gif|)$/g, "")
