@@ -36,7 +36,7 @@ Use Adorable Avatars as a fallback and get rid of those gray silhouettes!
 Here's a quick example in Haml:
 ```haml
 .user
-  %img.avatar{:src => "http://api.adorable.io/avatar/#{user.name}"}
+  %img.avatar(src="http://api.adorable.io/avatar/#{user.name}")
 ```
 
 ### Requesting an Avatar
