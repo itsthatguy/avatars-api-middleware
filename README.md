@@ -53,6 +53,6 @@ To request an avatar with specific dimensions, use the following form:
 
 Where `dimensions` specifies the width and height, e.g. "300x300" or "400x200."
 
-So, if you want your friend Bob's avatar, with a width of 640px and a height of 480px, the URL would be:
+So, if you want your friend Bob's avatar, with a width of 100px and a height of 200px, the URL would be:
 
-    http://api.adorable.io/avatar/640x480/bob
+    http://api.adorable.io/avatar/100x200/bob
