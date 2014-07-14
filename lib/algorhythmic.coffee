@@ -9,10 +9,11 @@ class Algorhythmic
   _compute: (array) ->
     array
     .map(@_getCharInt)
-    .reduce((previousInt, currentInt) =>
-      (previousInt + currentInt) % @max
-    , 0)
+    .reduce(@_sumModulo(@max), 0)
 
   _getCharInt: (char) -> parseInt char.charCodeAt(0) or 0
+
+  _sumModulo: (modulus) ->
+    (a, b) -> (a + b) % modulus
 
 module.exports = new Algorhythmic()
