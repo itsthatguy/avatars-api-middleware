@@ -1,18 +1,18 @@
 class Algorhythmic
   max: 10
 
-  compute: (array) ->
+  convert: (string) ->
+    str = string.replace(/\.(png|jpg|gif|)$/g, "")
+    stringArray = str.split('')
+    return @_compute(stringArray)
+
+  _compute: (array) ->
     array
-    .map(@getCharInt)
+    .map(@_getCharInt)
     .reduce((previousInt, currentInt) =>
       (previousInt + currentInt) % @max
     , 0) + 1
 
-  getCharInt: (char) -> parseInt char.charCodeAt(0) or 0
-
-  convert: (string) ->
-    str = string.replace(/\.(png|jpg|gif|)$/g, "")
-    stringArray = str.split('')
-    return @compute(stringArray)
+  _getCharInt: (char) -> parseInt char.charCodeAt(0) or 0
 
 module.exports = new Algorhythmic()
