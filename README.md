@@ -1,12 +1,14 @@
 # adorable-avatars
 
-## What are avatars?
+## What is it?
+
+#### What are avatars?
 Avatars are earthly creatures that serve as proxies for gods.
 In the web world, they just represent people, and they're usually small images. 
 
 Some use photographs of themselves as their avatar. Some people use caricatures of themselves. Others pick their favorite superhero. The sky's the limit.
 
-## What's an avatar _service_?
+#### What's an avatar _service_?
 It answers the question "What is this user's avatar?"
 In this way, it provides a consistent representation of that user.
 Across _all_ websites that use that service. Pretty cool, right?
@@ -14,7 +16,7 @@ Across _all_ websites that use that service. Pretty cool, right?
 But what if you haven't uploaded your image to that service?
 Then you get a really boring, gray silhouette.
 
-## So what's the Adorable Avatar service?
+#### So what's the Adorable Avatar service?
 It's an interface to a better universe. With a simple route, your face will be filled with consistently-linked avatar glory!
 
 _Consistently-linked avatar glory_ What?
