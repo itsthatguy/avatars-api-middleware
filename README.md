@@ -19,7 +19,7 @@ Then you get a really boring, gray silhouette.
 #### So what's the Adorable Avatar service?
 It's an interface to a better universe. With a simple route, your face will be filled with consistently-linked avatar glory!
 
-_Consistently-linked avatar glory_ What?
+Huh? _Consistently-linked avatar glory?_
 
 Whenever you make a request to Adorable Avatars, using an identifier like "abott@adorable.io," we give you an image for you to use on your page.
 Most importantly, it's the same image! Every. Single. Time.
