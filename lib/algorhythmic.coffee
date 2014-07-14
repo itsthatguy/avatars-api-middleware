@@ -1,19 +1,13 @@
 
 class Algorhythmic
   max: 10
-  getNum: (val) ->
-    newVal = val % @max + 1
-    return newVal
 
-  compute: (arr) ->
-    if arr.length == 1
-      char = @getCharInt(arr[0])
-      return @getNum(char)
-
-    arr.reduce (previousChar, currentChar, i) =>
-      previousChar = @getCharInt(previousChar) unless i > 1
-      currentChar  = @getCharInt(currentChar)
-      return @getNum(previousChar + currentChar)
+  compute: (array) ->
+    array
+    .map(@getCharInt)
+    .reduce((previousInt, currentInt) =>
+      (previousInt + currentInt) % @max
+    , 0) + 1
 
   getCharInt: (char) -> parseInt char.charCodeAt(0) or 0
 
