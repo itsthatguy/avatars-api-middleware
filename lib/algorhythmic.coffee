@@ -1,4 +1,3 @@
-
 class Algorhythmic
   max: 10
 
@@ -15,6 +14,5 @@ class Algorhythmic
     str = string.replace(/\.(png|jpg|gif|)$/g, "")
     stringArray = str.split('')
     return @compute(stringArray)
-
 
 module.exports = new Algorhythmic()
