@@ -33,9 +33,11 @@ Already have avatars implemented in your application?
 Use Adorable Avatars as a fallback and get rid of those gray silhouettes!
 
 ## How do I use it?
-1. Clone this repo
-2. Install dependencies: `npm install`
-3. Start the server: `npm start`
+Here's a quick example in Haml:
+```haml
+.user
+  %img.avatar{:src => "http://api.adorable.io/avatar/#{user.name}"}
+```
 
 ### Requesting an Avatar
 The most basic request is of the following form:
