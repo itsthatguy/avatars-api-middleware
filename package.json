@@ -7,7 +7,7 @@
     "node": "0.10.x"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node_modules/.bin/mocha",
     "start": "node_modules/.bin/nodemon start.js",
     "postinstall": "node postinstall.js"
   },
@@ -44,5 +44,8 @@
     "type": "git",
     "url": "https://github.com/adorableio/adorable-avatars.git"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "~1.20.1",
+    "chai": "~1.9.1"
+  }
 }
