@@ -1,5 +1,6 @@
 class Bucketer
-  max: 10
+  constructor: (numBuckets) ->
+    @numBuckets = numBuckets
 
   convert: (string) ->
     str = string.replace(/\.(png|jpg|gif|)$/g, "")
@@ -9,11 +10,11 @@ class Bucketer
   _compute: (array) ->
     array
     .map(@_getCharInt)
-    .reduce(@_sumModulo(@max), 0)
+    .reduce(@_sumModulo(@numBuckets), 0)
 
   _getCharInt: (char) -> parseInt char.charCodeAt(0) or 0
 
   _sumModulo: (modulus) ->
     (a, b) -> (a + b) % modulus
 
-module.exports = new Bucketer()
+module.exports = Bucketer

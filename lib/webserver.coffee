@@ -5,7 +5,7 @@ path     = require('path')
 favicon  = require('serve-favicon')
 fs       = require('fs')
 
-bucketer = require('./bucketer.coffee')
+Bucketer = require('./bucketer.coffee')
 imager   = require('./imager.coffee')
 
 app           = express()
@@ -30,11 +30,13 @@ app.get '/', (req, res) -> res.render(path.join(generatedPath, 'index.html'))
 
 # Avatars: Basic Route
 app.get '/avatar/:name', (req, res) ->
+  bucketer = new Bucketer(10)
   id = bucketer.convert(req.params.name)
   res.sendfile( path.join(generatedPath, "img", "avatar#{id}.png") )
 
 # Avatars: Route with custom Size
 app.get '/avatar/:size/:name', (req, res, next) ->
+  bucketer = new Bucketer(10)
   id = bucketer.convert(req.params.name)
   imgPath = path.join(generatedPath, "img", "avatar#{id}.png")
   imager.resize(imgPath, req.params.size, req, res, next)

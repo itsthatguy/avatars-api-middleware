@@ -1,10 +1,14 @@
 expect = require('chai').expect
-bucketer = require('../../lib/bucketer')
+Bucketer = require('../../lib/bucketer')
 
 describe 'Bucketer', ->
-  describe 'bucketing an identifier', ->
-    bucket = randomString = null
+  bucketer = numBuckets = null
 
+  beforeEach ->
+    numBuckets = 10
+    bucketer = new Bucketer(numBuckets)
+
+  describe 'bucketing an identifier', ->
     it 'buckets an empty string', ->
       expect(bucketer.convert('')).to.be.ok
 
@@ -22,4 +26,4 @@ describe 'Bucketer', ->
         randomString = Math.random().toString(30).substring(2)
         bucket = bucketer.convert(randomString)
 
-        expect(bucket).to.be.within(1,10)
+        expect(bucket).to.be.within(1, numBuckets)
