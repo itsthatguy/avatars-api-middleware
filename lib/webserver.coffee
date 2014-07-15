@@ -10,7 +10,7 @@ imager   = require('./imager.coffee')
 
 app           = express()
 webserver     = http.createServer(app)
-basePath      = path.dirname(require.main.filename)
+basePath      = path.join(__dirname, '..')
 generatedPath = path.join(basePath, '.generated')
 vendorPath    = path.join(basePath, 'bower_components')
 faviconPath   = path.join(basePath, 'app', 'favicon.ico')
