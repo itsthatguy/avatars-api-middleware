@@ -1,4 +1,4 @@
-class Algorhythmic
+class Bucketer
   max: 10
 
   convert: (string) ->
@@ -16,4 +16,4 @@ class Algorhythmic
   _sumModulo: (modulus) ->
     (a, b) -> (a + b) % modulus
 
-module.exports = new Algorhythmic()
+module.exports = new Bucketer()
