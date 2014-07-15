@@ -31,14 +31,14 @@ app.get '/', (req, res) -> res.render(path.join(generatedPath, 'index.html'))
 # Avatars: Basic Route
 app.get '/avatar/:name', (req, res) ->
   bucketer = new Bucketer(10)
-  id = bucketer.convert(req.params.name)
-  res.sendfile( path.join(generatedPath, "img", "avatar#{id}.png") )
+  bucket = bucketer.bucketFor(req.params.name)
+  res.sendfile( path.join(generatedPath, "img", "avatar#{bucket}.png") )
 
 # Avatars: Route with custom Size
 app.get '/avatar/:size/:name', (req, res, next) ->
   bucketer = new Bucketer(10)
-  id = bucketer.convert(req.params.name)
-  imgPath = path.join(generatedPath, "img", "avatar#{id}.png")
+  bucket = bucketer.bucketFor(req.params.name)
+  imgPath = path.join(generatedPath, "img", "avatar#{bucket}.png")
   imager.resize(imgPath, req.params.size, req, res, next)
 
 

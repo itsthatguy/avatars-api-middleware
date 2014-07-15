@@ -2,7 +2,7 @@ class Bucketer
   constructor: (numBuckets) ->
     @numBuckets = numBuckets
 
-  convert: (string) ->
+  bucketFor: (string) ->
     str = string.replace(/\.(png|jpg|gif|)$/g, "")
     stringArray = str.split('')
     return @_compute(stringArray) + 1
