@@ -46,7 +46,7 @@ process easy and effective for everyone involved.
    Use Git's [interactive rebase](https://help.github.com/articles/interactive-rebase)
    feature to tidy up your commits before making them public.
 
-   __NOTE__ Before you commit, ensure that the tests are still passing:
+   __NOTE__: Before you commit, ensure that the tests are still passing:
    ```bash
    npm test
    ```
