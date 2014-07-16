@@ -68,5 +68,6 @@ process easy and effective for everyone involved.
 4. [Open a Pull Request](https://help.github.com/articles/using-pull-requests/)
     with a clear title and description against the `master` branch.
 
-__IMPORTANT__: By submitting a patch, you agree to allow the project owners to
-license your work under the terms of the [MIT License](LICENSE).
+## License
+
+By contributing your code, you agree to license your contribution under the [MIT license](LICENSE).
