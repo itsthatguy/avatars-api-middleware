@@ -17,7 +17,7 @@ Across _all_ websites that use that service. Pretty cool, right?
 But what if you haven't uploaded your image to that service?
 Then you get a really boring, gray silhouette.
 
-#### So what's the Adorable Avatar service?
+#### So what's the Adorable Avatars service?
 It's an interface to a better universe. With a simple route, your face will be filled with consistently-linked avatar glory!
 
 Huh? _Consistently-linked avatar glory?_
