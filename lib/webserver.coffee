@@ -3,7 +3,8 @@ http     = require('http')
 express  = require('express')
 path     = require('path')
 favicon  = require('serve-favicon')
-fs       = require('fs')
+findPort = require('find-port')
+colors   = require('colors')
 
 Bucketer = require('./bucketer.coffee')
 imager   = require('./imager.coffee')
@@ -21,8 +22,18 @@ app.use(favicon(faviconPath))
 app.use('/assets', express.static(generatedPath))
 app.use('/vendor', express.static(vendorPath))
 
+# Find an available port
 port = process.env.PORT || 3002
-webserver.listen(port)
+if port > 3002
+  webserver.listen(port)
+else
+  findPort port, port + 100, (ports) ->
+    webserver.listen(ports[0])
+
+# Notify the console that we're connected and on what port
+webserver.on 'listening', ->
+  address = webserver.address()
+  console.log "[Firepit] Server running at http://#{address.address}:#{address.port}".green
 
 
 # Root
