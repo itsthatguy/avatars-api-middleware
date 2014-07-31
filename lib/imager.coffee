@@ -29,7 +29,8 @@ class Imager
   clamp: (num) -> return Math.min(Math.max(num, @minSize), @maxSize)
 
   parseSize: (size) ->
-    size = size.split("x")
-    return { width: @clamp(size[0]), height: @clamp(size[1]) }
+    [width, height] = size.split("x")
+    height?= width
+    return { width: @clamp(width), height: @clamp(height) }
 
 module.exports = new Imager()

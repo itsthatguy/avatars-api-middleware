@@ -48,15 +48,13 @@ The most basic request is of the following form:
 Where `identifier` is the unique identifier for your user (name, email, md5, etc.).
 This will serve the image in its default size.
 
-To request an avatar with specific dimensions, use the following form:
+To request an avatar with specific size, use the following form:
 
-    http://api.adorable.io/avatar/<dimensions>/<identifier>
+    http://api.adorable.io/avatar/<size>/<identifier>
 
-Where `dimensions` specifies the width and height, e.g. "300x300" or "400x200."
+So, if you want your friend Bob's avatar, with a height and width of 200px, the URL would be:
 
-So, if you want your friend Bob's avatar, with a width of 100px and a height of 200px, the URL would be:
-
-    http://api.adorable.io/avatar/100x200/bob
+    http://api.adorable.io/avatar/200/bob
 
 ## Contributing
 
