@@ -1,6 +1,7 @@
 
 http     = require('http')
 express  = require('express')
+fs       = require('fs')
 path     = require('path')
 favicon  = require('serve-favicon')
 findPort = require('find-port')
@@ -39,18 +40,20 @@ webserver.on 'listening', ->
 # Routes
 # -----------------
 
+imageCount = fs.readdirSync(path.join(generatedPath, 'img')).length
+
 # Root
 app.get '/', (req, res) -> res.render(path.join(generatedPath, 'index.html'))
 
 # Avatars: Basic Route
 app.get '/avatar/:name', (req, res) ->
-  bucketer = new Bucketer(10)
+  bucketer = new Bucketer(imageCount)
   bucket = bucketer.bucketFor(req.params.name)
   res.sendfile( path.join(generatedPath, "img", "avatar#{bucket}.png") )
 
 # Avatars: Route with custom Size
 app.get '/avatar/:size/:name', (req, res, next) ->
-  bucketer = new Bucketer(10)
+  bucketer = new Bucketer(imageCount)
   bucket = bucketer.bucketFor(req.params.name)
   imgPath = path.join(generatedPath, "img", "avatar#{bucket}.png")
   imager.resize(imgPath, req.params.size, req, res, next)
