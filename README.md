@@ -17,7 +17,7 @@ Across _all_ websites that use that service. Pretty cool, right?
 But what if you haven't uploaded your image to that service?
 Then you get a really boring, gray silhouette.
 
-#### So what's the Adorable Avatar service?
+#### So what's the Adorable Avatars service?
 It's an interface to a better universe. With a simple route, your face will be filled with consistently-linked avatar glory!
 
 Huh? _Consistently-linked avatar glory?_
@@ -48,12 +48,18 @@ The most basic request is of the following form:
 Where `identifier` is the unique identifier for your user (name, email, md5, etc.).
 This will serve the image in its default size.
 
-To request an avatar with specific dimensions, use the following form:
+To request an avatar with specific size, use the following form:
 
-    http://api.adorable.io/avatar/<dimensions>/<identifier>
+    http://api.adorable.io/avatar/<size>/<identifier>
 
-Where `dimensions` specifies the width and height, e.g. "300x300" or "400x200."
+So, if you want your friend Bob's avatar, with a height and width of 200px, the URL would be:
 
-So, if you want your friend Bob's avatar, with a width of 100px and a height of 200px, the URL would be:
+    http://api.adorable.io/avatar/200/bob
 
-    http://api.adorable.io/avatar/100x200/bob
+## Contributing
+
+Please read the [contributors' guide](CONTRIBUTING.md)
+
+## Open-source Contributors
+
+* [missingdink](https://twitter.com/missingdink): Illustrated the current avatars!

@@ -1,11 +1,12 @@
-class Bucketer
-  constructor: (numBuckets) ->
-    @numBuckets = numBuckets
+class SlotMachine
+  constructor: (slots) ->
+    @slots = slots
+    @numBuckets = slots.length
 
-  bucketFor: (string) ->
+  pull: (string) ->
     str = string.replace(/\.(png|jpg|gif|)$/g, "")
     stringArray = str.split('')
-    return @_compute(stringArray) + 1
+    return @slots[@_compute(stringArray)]
 
   _compute: (array) ->
     array
@@ -17,4 +18,4 @@ class Bucketer
   _sumModulo: (modulus) ->
     (a, b) -> (a + b) % modulus
 
-module.exports = Bucketer
+module.exports = SlotMachine

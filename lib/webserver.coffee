@@ -1,12 +1,13 @@
 
 http     = require('http')
 express  = require('express')
+fs       = require('fs')
 path     = require('path')
 favicon  = require('serve-favicon')
 findPort = require('find-port')
 colors   = require('colors')
 
-Bucketer = require('./bucketer.coffee')
+SlotMachine = require('./slotMachine.coffee')
 imager   = require('./imager.coffee')
 
 app           = express()
@@ -16,8 +17,8 @@ generatedPath = path.join(basePath, '.generated')
 vendorPath    = path.join(basePath, 'bower_components')
 faviconPath   = path.join(basePath, 'app', 'favicon.ico')
 
+# Configure the express server
 app.engine('.html', require('ejs').__express)
-
 app.use(favicon(faviconPath))
 app.use('/assets', express.static(generatedPath))
 app.use('/vendor', express.static(vendorPath))
@@ -35,24 +36,27 @@ webserver.on 'listening', ->
   address = webserver.address()
   console.log "[Firepit] Server running at http://#{address.address}:#{address.port}".green
 
+#
+# Routes
+# -----------------
+
+imageFiles = fs.readdirSync(path.join(generatedPath, 'img'))
 
 # Root
-app.get '/', (req, res) -> res.render(path.join(generatedPath, 'index.html'))
+app.get '/', (req, res) -> res.redirect('http://avatars.adorable.io')
 
 # Avatars: Basic Route
 app.get '/avatar/:name', (req, res) ->
-  bucketer = new Bucketer(10)
-  bucket = bucketer.bucketFor(req.params.name)
-  res.sendfile( path.join(generatedPath, "img", "avatar#{bucket}.png") )
+  slotMachine = new SlotMachine(imageFiles)
+  image = slotMachine.pull(req.params.name)
+  res.sendFile( path.join(generatedPath, "img", image) )
 
 # Avatars: Route with custom Size
 app.get '/avatar/:size/:name', (req, res, next) ->
-  bucketer = new Bucketer(10)
-  bucket = bucketer.bucketFor(req.params.name)
-  imgPath = path.join(generatedPath, "img", "avatar#{bucket}.png")
+  slotMachine = new SlotMachine(imageFiles)
+  image = slotMachine.pull(req.params.name)
+  imgPath = path.join(generatedPath, "img", image)
   imager.resize(imgPath, req.params.size, req, res, next)
-
-
 
 
 module.exports = webserver
