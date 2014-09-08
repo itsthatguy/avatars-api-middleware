@@ -43,7 +43,7 @@ webserver.on 'listening', ->
 imageFiles = fs.readdirSync(path.join(generatedPath, 'img'))
 
 # Root
-app.get '/', (req, res) -> res.render(path.join(generatedPath, 'index.html'))
+app.get '/', (req, res) -> res.redirect('http://avatars.adorable.io')
 
 # Avatars: Basic Route
 app.get '/avatar/:name', (req, res) ->
