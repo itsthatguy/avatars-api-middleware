@@ -11,14 +11,16 @@ var gulp         = require('gulp'),
     rename       = require('gulp-rename'),
     stylus       = require('gulp-stylus'),
     browserify   = require('gulp-browserify'),
-    path         = require('path');
+    path         = require('path'),
+    plumber      = require('gulp-plumber');
 
-// var del, livereload, runSequence;
+var del, livereload, runSequence;
 
 if (process.env.NODE_ENV == "development") {
   del         = require('del'),
   livereload  = require('gulp-livereload'),
-  runSequence = require('run-sequence');
+  runSequence = require('run-sequence'),
+  findPort    = require('find-port');
 }
 
 var baseAppPath = path.join(__dirname, 'app'),
@@ -46,7 +48,7 @@ var paths = {
 var watchPaths = {
   css: [
     path.join(baseCssPath, '**', '*.styl*'),
-    baseCssPath, path.join('**', '*', '*.styl*')
+    path.join(baseCssPath, '**', '*', '*.styl*')
   ],
   coffee: [path.join(baseJsPath, '**', '*.coffee')],
   assets: paths.assetsPaths,
@@ -82,6 +84,7 @@ gulp.task('test', function() {
 // Get and render all .styl files recursively
 gulp.task('stylus', function () {
   return gulp.src(paths.cssInput)
+    .pipe(plumber())
     .pipe(stylus()
       .on('error', gutil.log)
       .on('error', gutil.beep))
@@ -95,6 +98,7 @@ gulp.task('stylus', function () {
 
 gulp.task('coffee', function() {
   return gulp.src(paths.coffeeInput, { read: false })
+    .pipe(plumber())
     .pipe(browserify({
       basedir: __dirname,
       transform: ['coffeeify'],
@@ -112,6 +116,7 @@ gulp.task('coffee', function() {
 
 gulp.task('jade', function() {
   return gulp.src(paths.jadePath)
+    .pipe(plumber())
     .pipe(jade({ pretty: true }))
     .pipe(gulp.dest(paths.assetsOutput))
 });
@@ -122,6 +127,7 @@ gulp.task('jade', function() {
 
 gulp.task('ejs', function() {
   return gulp.src(paths.ejsPath)
+    .pipe(plumber())
     .pipe(ejs()
       .on('error', gutil.log)
       .on('error', gutil.beep))
@@ -135,6 +141,7 @@ gulp.task('ejs', function() {
 
 gulp.task('assets', function() {
   return gulp.src(paths.assetsPaths, {base: paths.assetsBasePath})
+    .pipe(plumber())
     .on('error', gutil.log)
     .on('error', gutil.beep)
     .pipe(gulp.dest(paths.assetsOutput));
@@ -163,30 +170,33 @@ gulp.task('watch-pre-tasks', function(callback) {
 //
 gulp.task('watch', function(callback) {
 
-  gulp.watch(watchPaths.css, ['stylus'])
-    .on('error', gutil.log)
-    .on('error', gutil.beep);
-  gulp.watch(watchPaths.coffee, ['coffee'])
-    .on('error', gutil.log)
-    .on('error', gutil.beep);
-  gulp.watch(watchPaths.assets, ['assets'])
-    .on('error', gutil.log)
-    .on('error', gutil.beep);
-  gulp.watch(watchPaths.ejs, ['ejs'])
-    .on('error', gutil.log)
-    .on('error', gutil.beep);
-  gulp.watch(watchPaths.jade, ['jade'])
-    .on('error', gutil.log)
-    .on('error', gutil.beep);
+  gulp.watch(watchPaths.css, ['stylus']);
+  gulp.watch(watchPaths.coffee, ['coffee']);
+  gulp.watch(watchPaths.assets, ['assets']);
+  gulp.watch(watchPaths.ejs, ['ejs']);
+  gulp.watch(watchPaths.jade, ['jade']);
 
-  if (livereload) {
-    var server = livereload.listen({ silent: true });
-    if (server) {
-      gutil.log('[LiveReload] Now listening on port: ' + server.port);
-      livereload.changed();
-    }
-    gulp.watch(path.join(baseStaticPath, '**'))
-      .on('change', livereload.changed);
+if (livereload) {
+    findPort([35729], function(ports) {
+
+      if (ports.length > 0) {
+
+        var server = livereload.listen({ silent: true });
+        if (server) {
+          var msg = "[LiveReload] Now listening on port: " + server.port;
+          gutil.log(msg.green);
+          livereload.changed();
+        }
+        gulp.watch(path.join(baseStaticPath, '**'))
+          .on('error', gutil.log)
+          .on('error', gutil.beep)
+          .on('change', livereload.changed);
+
+      } else {
+        gutil.log("[LiveReload] Can't start LiveReload => ALREADY RUNNING".red);
+      }
+
+    });
   }
 });
 

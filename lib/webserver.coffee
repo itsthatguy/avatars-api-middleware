@@ -49,7 +49,7 @@ app.get '/', (req, res) -> res.redirect('http://avatars.adorable.io')
 app.get '/avatar/:name', (req, res) ->
   slotMachine = new SlotMachine(imageFiles)
   image = slotMachine.pull(req.params.name)
-  res.sendfile( path.join(generatedPath, "img", image) )
+  res.sendFile( path.join(generatedPath, "img", image) )
 
 # Avatars: Route with custom Size
 app.get '/avatar/:size/:name', (req, res, next) ->
