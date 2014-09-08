@@ -7,7 +7,7 @@ favicon  = require('serve-favicon')
 findPort = require('find-port')
 colors   = require('colors')
 
-Bucketer = require('./bucketer.coffee')
+SlotMachine = require('./slotMachine.coffee')
 imager   = require('./imager.coffee')
 
 app           = express()
@@ -40,22 +40,22 @@ webserver.on 'listening', ->
 # Routes
 # -----------------
 
-imageCount = fs.readdirSync(path.join(generatedPath, 'img')).length
+imageFiles = fs.readdirSync(path.join(generatedPath, 'img'))
 
 # Root
 app.get '/', (req, res) -> res.render(path.join(generatedPath, 'index.html'))
 
 # Avatars: Basic Route
 app.get '/avatar/:name', (req, res) ->
-  bucketer = new Bucketer(imageCount)
-  bucket = bucketer.bucketFor(req.params.name)
-  res.sendfile( path.join(generatedPath, "img", "avatar#{bucket}.png") )
+  slotMachine = new SlotMachine(imageFiles)
+  image = slotMachine.pull(req.params.name)
+  res.sendfile( path.join(generatedPath, "img", image) )
 
 # Avatars: Route with custom Size
 app.get '/avatar/:size/:name', (req, res, next) ->
-  bucketer = new Bucketer(imageCount)
-  bucket = bucketer.bucketFor(req.params.name)
-  imgPath = path.join(generatedPath, "img", "avatar#{bucket}.png")
+  slotMachine = new SlotMachine(imageFiles)
+  image = slotMachine.pull(req.params.name)
+  imgPath = path.join(generatedPath, "img", image)
   imager.resize(imgPath, req.params.size, req, res, next)
 
 
