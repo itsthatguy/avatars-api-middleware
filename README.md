@@ -59,3 +59,7 @@ So, if you want your friend Bob's avatar, with a height and width of 200px, the 
 ## Contributing
 
 Please read the [contributors' guide](CONTRIBUTING.md)
+
+## Open-source Contributors
+
+* [missingdink](https://twitter.com/missingdink): Illustrated the current avatars!
