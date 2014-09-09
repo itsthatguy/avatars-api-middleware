@@ -42,6 +42,12 @@ webserver.on 'listening', ->
 # Routes
 # -----------------
 
+# Helper function for the stream callback
+sendFile = (err, stdout, req, res, next) ->
+  res.setHeader('Expires', new Date(Date.now() + 604800000))
+  res.setHeader('Content-Type', 'image/png')
+  stdout.pipe(res)
+
 # Root
 app.get '/', (req, res) -> res.redirect('http://avatars.adorable.io')
 
@@ -49,17 +55,13 @@ app.get '/', (req, res) -> res.redirect('http://avatars.adorable.io')
 app.get '/avatar/:name', (req, res, next) ->
   faceParts = potato.parts(req.params.name)
   face = imager.combine faceParts, (err, stdout) ->
-    res.setHeader('Expires', new Date(Date.now() + 604800000))
-    res.setHeader('Content-Type', 'image/png')
-    stdout.pipe(res)
+    sendFile(err, stdout, req, res, next)
 
 # Avatars: Route with custom Size
 app.get '/avatar/:size/:name', (req, res, next) ->
   faceParts = potato.parts(req.params.name)
   imager.resize faceParts, req.params.size, (err, stdout) ->
-    res.setHeader('Expires', new Date(Date.now() + 604800000))
-    res.setHeader('Content-Type', 'image/png')
-    stdout.pipe(res)
+    sendFile(err, stdout, req, res, next)
 
 
 module.exports = webserver
