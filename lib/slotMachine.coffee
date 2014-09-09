@@ -1,12 +1,11 @@
 class SlotMachine
-  constructor: (slots) ->
-    @slots = slots
-    @numBuckets = slots.length
+  constructor: -> return
 
-  pull: (string) ->
+  pull: (slots, string) ->
+    @numBuckets = slots.length
     str = string.replace(/\.(png|jpg|gif|)$/g, "")
     stringArray = str.split('')
-    return @slots[@_compute(stringArray)]
+    return slots[@_compute(stringArray)]
 
   _compute: (array) ->
     array
@@ -18,4 +17,4 @@ class SlotMachine
   _sumModulo: (modulus) ->
     (a, b) -> (a + b) % modulus
 
-module.exports = SlotMachine
+module.exports = new SlotMachine()

@@ -1,24 +1,36 @@
 
+path        = require('path')
 gm          = require('gm')
 imageMagick = gm.subClass({ imageMagick: true })
+
+basePath      = path.join(__dirname, '..')
+generatedPath = path.join(basePath, '.generated')
 
 class Imager
   minSize: 40
   maxSize: 400
 
-  resize: (imgPath, size, req, res, next) ->
+  combine: (face, callback) ->
+    imageMagick()
+    .in(face.eyes)
+    .in(face.nose)
+    .in(face.mouth)
+    .mosaic()
+    .stream('png', callback)
+
+  resize: (face, size, callback) ->
     size = @parseSize(size)
     cropOffset = @parseCrop(size)
 
-    imageMagick( imgPath )
+    imageMagick()
+    .in(face.eyes)
+    .in(face.nose)
+    .in(face.mouth)
+    .mosaic()
     .resize(size.width, size.height, "^")
     .crop(size.width, size.height, cropOffset.horizontal, cropOffset.vertical)
     .autoOrient()
-    .stream 'png', (err, stdout) ->
-      return next(err) if (err)
-      res.setHeader('Expires', new Date(Date.now() + 604800000))
-      res.setHeader('Content-Type', 'image/png')
-      stdout.pipe(res)
+    .stream('png', callback)
 
   parseCrop: (size) ->
     return {

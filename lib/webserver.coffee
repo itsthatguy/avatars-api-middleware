@@ -1,15 +1,17 @@
+# node packages
+http          = require('http')
+express       = require('express')
+fs            = require('fs')
+path          = require('path')
+favicon       = require('serve-favicon')
+findPort      = require('find-port')
+colors        = require('colors')
 
-http     = require('http')
-express  = require('express')
-fs       = require('fs')
-path     = require('path')
-favicon  = require('serve-favicon')
-findPort = require('find-port')
-colors   = require('colors')
+# our libs
+potato        = require('./potato.coffee')
+imager        = require('./imager.coffee')
 
-SlotMachine = require('./slotMachine.coffee')
-imager   = require('./imager.coffee')
-
+# configuration
 app           = express()
 webserver     = http.createServer(app)
 basePath      = path.join(__dirname, '..')
@@ -40,23 +42,24 @@ webserver.on 'listening', ->
 # Routes
 # -----------------
 
-imageFiles = fs.readdirSync(path.join(generatedPath, 'img'))
-
 # Root
 app.get '/', (req, res) -> res.redirect('http://avatars.adorable.io')
 
 # Avatars: Basic Route
-app.get '/avatar/:name', (req, res) ->
-  slotMachine = new SlotMachine(imageFiles)
-  image = slotMachine.pull(req.params.name)
-  res.sendFile( path.join(generatedPath, "img", image) )
+app.get '/avatar/:name', (req, res, next) ->
+  faceParts = potato.parts(req.params.name)
+  face = imager.combine faceParts, (err, stdout) ->
+    res.setHeader('Expires', new Date(Date.now() + 604800000))
+    res.setHeader('Content-Type', 'image/png')
+    stdout.pipe(res)
 
 # Avatars: Route with custom Size
 app.get '/avatar/:size/:name', (req, res, next) ->
-  slotMachine = new SlotMachine(imageFiles)
-  image = slotMachine.pull(req.params.name)
-  imgPath = path.join(generatedPath, "img", image)
-  imager.resize(imgPath, req.params.size, req, res, next)
+  faceParts = potato.parts(req.params.name)
+  imager.resize faceParts, req.params.size, (err, stdout) ->
+    res.setHeader('Expires', new Date(Date.now() + 604800000))
+    res.setHeader('Content-Type', 'image/png')
+    stdout.pipe(res)
 
 
 module.exports = webserver
