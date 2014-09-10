@@ -56,7 +56,8 @@ router.use (req, res, next) ->
   Tracker.trackPage('API request', req.url, next)
 
 # Root
-router.get '/', (req, res) -> res.redirect('http://avatars.adorable.io')
+router.get '/', (req, res) ->
+  res.redirect('http://avatars.adorable.io')
 
 # Avatars: Basic Route
 router.get '/avatar/:name', (req, res) ->
