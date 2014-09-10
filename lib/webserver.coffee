@@ -7,6 +7,7 @@ findPort = require('find-port')
 colors   = require('colors')
 
 SlotMachine = require('./slotMachine.coffee')
+Tracker = require('./tracker.coffee')
 imager   = require('./imager.coffee')
 
 app           = express()
@@ -36,8 +37,12 @@ webserver.on 'listening', ->
   console.log "[Firepit] Server running at http://#{address.address}:#{address.port}".green
 
 #
-# Routes
+# Routing
 # -----------------
+
+# Tracking
+app.all '*', (req, res, next) ->
+  Tracker.trackPage('API request', req.url, next)
 
 imageFiles = fs.readdirSync(path.join(generatedPath, 'img'))
 
