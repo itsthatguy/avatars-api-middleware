@@ -1,4 +1,3 @@
-
 http     = require('http')
 express  = require('express')
 fs       = require('fs')
@@ -57,6 +56,5 @@ app.get '/avatar/:size/:name', (req, res, next) ->
   image = slotMachine.pull(req.params.name)
   imgPath = path.join(generatedPath, "img", image)
   imager.resize(imgPath, req.params.size, req, res, next)
-
 
 module.exports = webserver
