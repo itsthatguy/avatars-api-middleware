@@ -54,9 +54,14 @@ router.param 'name', (req, res, next, id) ->
   next()
 
 # Tracking
-router.use (req, res, next) ->
-  if env == 'production'
-    Tracker.trackPage('API request', req.url, next)
+if env == 'production'
+  router.use (req, res, next) ->
+    Tracker.trackPage(
+      'API request',
+      req.url,
+      utmr: req.get('Referrer'),
+      next
+    )
 
 # Root
 router.get '/', (req, res) ->
