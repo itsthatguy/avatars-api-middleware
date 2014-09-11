@@ -45,7 +45,7 @@ webserver.on 'listening', ->
 # -----------------
 
 # Helper function for the stream callback
-sendFile = (err, stdout, req, res, next) ->
+sendImage = (err, stdout, req, res, next) ->
   res.setHeader('Expires', new Date(Date.now() + 604800000))
   res.setHeader('Content-Type', 'image/png')
   stdout.pipe(res)
@@ -68,12 +68,12 @@ router.get '/', (req, res) ->
 # Avatars: Basic Route
 router.get '/avatar/:name', (req, res, next) ->
   imager.combine req.faceParts, (err, stdout) ->
-    sendFile(err, stdout, req, res, next)
+    sendImage(err, stdout, req, res, next)
 
 # Avatars: Route with custom Size
 router.get '/avatar/:size/:name', (req, res, next) ->
   imager.resize req.faceParts, req.params.size, (err, stdout) ->
-    sendFile(err, stdout, req, res, next)
+    sendImage(err, stdout, req, res, next)
 
 app.use('/', router)
 
