@@ -24,8 +24,10 @@ app.use(favicon(faviconPath))
 app.use('/assets', express.static(generatedPath))
 app.use('/vendor', express.static(vendorPath))
 
-# Find an available port
 port = process.env.PORT || 3002
+env = process.env.NODE_ENV
+
+# Find an available port
 if port > 3002
   webserver.listen(port)
 else
@@ -53,7 +55,8 @@ router.param 'name', (req, res, next, id) ->
 
 # Tracking
 router.use (req, res, next) ->
-  Tracker.trackPage('API request', req.url, next)
+  if env == 'production'
+    Tracker.trackPage('API request', req.url, next)
 
 # Root
 router.get '/', (req, res) ->
