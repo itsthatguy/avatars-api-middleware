@@ -1,4 +1,3 @@
-
 http     = require('http')
 express  = require('express')
 fs       = require('fs')
@@ -8,9 +7,11 @@ findPort = require('find-port')
 colors   = require('colors')
 
 SlotMachine = require('./slotMachine.coffee')
+Tracker = require('./tracker.coffee')
 imager   = require('./imager.coffee')
 
 app           = express()
+router        = express.Router()
 webserver     = http.createServer(app)
 basePath      = path.join(__dirname, '..')
 generatedPath = path.join(basePath, '.generated')
@@ -37,26 +38,35 @@ webserver.on 'listening', ->
   console.log "[Firepit] Server running at http://#{address.address}:#{address.port}".green
 
 #
-# Routes
+# Routing
 # -----------------
-
 imageFiles = fs.readdirSync(path.join(generatedPath, 'img'))
+slotMachine = new SlotMachine(imageFiles)
+
+# Determine which avatar to serve
+router.param 'name', (req, res, next, id) ->
+  image = slotMachine.pull(id)
+
+  req.image = image
+  req.imagePath = path.join(generatedPath, 'img', image)
+  next()
+
+# Tracking
+router.use (req, res, next) ->
+  Tracker.trackPage('API request', req.url, next)
 
 # Root
-app.get '/', (req, res) -> res.redirect('http://avatars.adorable.io')
+router.get '/', (req, res) ->
+  res.redirect('http://avatars.adorable.io')
 
 # Avatars: Basic Route
-app.get '/avatar/:name', (req, res) ->
-  slotMachine = new SlotMachine(imageFiles)
-  image = slotMachine.pull(req.params.name)
-  res.sendFile( path.join(generatedPath, "img", image) )
+router.get '/avatar/:name', (req, res) ->
+  res.sendFile(req.imagePath)
 
 # Avatars: Route with custom Size
-app.get '/avatar/:size/:name', (req, res, next) ->
-  slotMachine = new SlotMachine(imageFiles)
-  image = slotMachine.pull(req.params.name)
-  imgPath = path.join(generatedPath, "img", image)
-  imager.resize(imgPath, req.params.size, req, res, next)
+router.get '/avatar/:size/:name', (req, res, next) ->
+  imager.resize(req.imagePath, req.params.size, req, res, next)
 
+app.use('/', router)
 
 module.exports = webserver
