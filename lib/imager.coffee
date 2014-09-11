@@ -1,4 +1,3 @@
-
 path        = require('path')
 gm          = require('gm')
 imageMagick = gm.subClass({ imageMagick: true })

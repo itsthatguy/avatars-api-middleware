@@ -1,18 +1,20 @@
 # node packages
-http          = require('http')
-express       = require('express')
-fs            = require('fs')
-path          = require('path')
-favicon       = require('serve-favicon')
-findPort      = require('find-port')
-colors        = require('colors')
+http     = require('http')
+express  = require('express')
+fs       = require('fs')
+path     = require('path')
+favicon  = require('serve-favicon')
+findPort = require('find-port')
+colors   = require('colors')
 
 # our libs
-potato        = require('./potato.coffee')
-imager        = require('./imager.coffee')
+potato  = require('./potato.coffee')
+imager  = require('./imager.coffee')
+Tracker = require('./tracker.coffee')
 
 # configuration
 app           = express()
+router        = express.Router()
 webserver     = http.createServer(app)
 basePath      = path.join(__dirname, '..')
 generatedPath = path.join(basePath, '.generated')
@@ -39,7 +41,7 @@ webserver.on 'listening', ->
   console.log "[Firepit] Server running at http://#{address.address}:#{address.port}".green
 
 #
-# Routes
+# Routing
 # -----------------
 
 # Helper function for the stream callback
@@ -48,20 +50,31 @@ sendFile = (err, stdout, req, res, next) ->
   res.setHeader('Content-Type', 'image/png')
   stdout.pipe(res)
 
+# Determine which avatar to serve
+router.param 'name', (req, res, next, id) ->
+  faceParts = potato.parts(id)
+
+  req.faceParts = faceParts
+  next()
+
+# Tracking
+router.use (req, res, next) ->
+  Tracker.trackPage('API request', req.url, next)
+
 # Root
-app.get '/', (req, res) -> res.redirect('http://avatars.adorable.io')
+router.get '/', (req, res) ->
+  res.redirect('http://avatars.adorable.io')
 
 # Avatars: Basic Route
-app.get '/avatar/:name', (req, res, next) ->
-  faceParts = potato.parts(req.params.name)
-  face = imager.combine faceParts, (err, stdout) ->
+router.get '/avatar/:name', (req, res, next) ->
+  imager.combine req.faceParts, (err, stdout) ->
     sendFile(err, stdout, req, res, next)
 
 # Avatars: Route with custom Size
-app.get '/avatar/:size/:name', (req, res, next) ->
-  faceParts = potato.parts(req.params.name)
-  imager.resize faceParts, req.params.size, (err, stdout) ->
+router.get '/avatar/:size/:name', (req, res, next) ->
+  imager.resize req.faceParts, req.params.size, (err, stdout) ->
     sendFile(err, stdout, req, res, next)
 
+app.use('/', router)
 
 module.exports = webserver
