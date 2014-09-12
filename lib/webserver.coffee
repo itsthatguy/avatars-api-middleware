@@ -7,7 +7,7 @@ findPort = require('find-port')
 colors   = require('colors')
 
 SlotMachine = require('./slotMachine.coffee')
-Tracker = require('./tracker.coffee')
+tracker = require('./tracker.coffee')
 imager   = require('./imager.coffee')
 
 app           = express()
@@ -56,10 +56,11 @@ router.param 'name', (req, res, next, id) ->
 # Tracking
 if env == 'production'
   router.use (req, res, next) ->
-    Tracker.trackPage(
+    tracker.track(
       'API request',
-      req.url,
-      utmr: req.get('Referrer'),
+      url: req.url,
+      referrer: req.get('Referrer'),
+      ip: req.ip,
       next
     )
 

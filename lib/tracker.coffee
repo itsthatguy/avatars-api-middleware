@@ -1,7 +1,6 @@
-Tracker = require('nodealytics')
+Tracker = require('mixpanel')
 
-trackingID = 'UA-49535937-3'
-host = 'api.adorable.io'
-Tracker.initialize(trackingID, host)
+projectID = '489a8cc0db758b483e9db84d765c88ee'
+tracker = Tracker.init(projectID)
 
-module.exports = Tracker
+module.exports = tracker
