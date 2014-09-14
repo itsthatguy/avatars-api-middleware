@@ -2,9 +2,8 @@ request = require('supertest')
 webserver = require('../lib/webserver')
 
 describe 'requesting an avatar', ->
-  it 'responds with an image', ->
+  it 'responds with an image', (done) ->
     request(webserver)
       .get('/avatar/abbot')
       .expect('Content-Type', /image/)
-      .end (error, response) ->
-        throw error if error
+      .expect(200, done)
