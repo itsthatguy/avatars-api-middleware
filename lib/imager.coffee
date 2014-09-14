@@ -25,8 +25,8 @@ class Imager
       .trim()
       .gravity('Center')
       .resize(size.width, size.height, "^")
-      .extent(@maxSize, @maxSize)
       .background(face.color)
+      .extent(@maxSize, @maxSize)
       .stream('png', callback)
 
   parseCrop: (size) ->
