@@ -12,7 +12,6 @@ class Imager
   combine: (face, size, callback) ->
     if callback?
       size = @parseSize(size)
-      cropOffset = @parseCrop(size)
     else
       callback = size
       size = width: @maxSize, height: @maxSize
@@ -28,12 +27,6 @@ class Imager
       .background(face.color)
       .extent(@maxSize, @maxSize)
       .stream('png', callback)
-
-  parseCrop: (size) ->
-    return {
-      horizontal: Math.max(0, size.height-size.width) / 2
-      vertical: Math.max(0, size.width-size.height) / 2
-    }
 
   clamp: (num) -> return Math.min(Math.max(num, @minSize), @maxSize)
 
