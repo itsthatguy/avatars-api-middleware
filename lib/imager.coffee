@@ -11,25 +11,28 @@ class Imager
 
   combine: (face, callback) ->
     imageMagick()
-    .in(face.eyes)
-    .in(face.nose)
-    .in(face.mouth)
-    .mosaic()
-    .stream('png', callback)
+      .in(face.eyes)
+      .in(face.nose)
+      .in(face.mouth)
+      .mosaic()
+      .background(face.color)
+      .resize(@maxSize, @maxSize, "^")
+      .stream('png', callback)
 
   resize: (face, size, callback) ->
     size = @parseSize(size)
     cropOffset = @parseCrop(size)
 
     imageMagick()
-    .in(face.eyes)
-    .in(face.nose)
-    .in(face.mouth)
-    .mosaic()
-    .resize(size.width, size.height, "^")
-    .crop(size.width, size.height, cropOffset.horizontal, cropOffset.vertical)
-    .autoOrient()
-    .stream('png', callback)
+      .in(face.eyes)
+      .in(face.nose)
+      .in(face.mouth)
+      .mosaic()
+      .background(face.color)
+      .resize(size.width, size.height, "^")
+      .crop(size.width, size.height, cropOffset.horizontal, cropOffset.vertical)
+      .autoOrient()
+      .stream('png', callback)
 
   parseCrop: (size) ->
     return {

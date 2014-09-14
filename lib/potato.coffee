@@ -9,6 +9,18 @@ basePath      = path.join(__dirname, '..')
 generatedPath = path.join(basePath, '.generated')
 
 class Potato
+  colors: [
+    '#81bef1'
+    '#ad8bf2'
+    '#bff288'
+    '#de7878'
+    '#a5aac5'
+    '#6ff2c5'
+    '#f0da5e'
+    '#eb5972'
+    '#f6be5d'
+  ]
+
   constructor: ->
     @eyesFiles  = @files('eyes')
     @noseFiles  = @files('nose')
@@ -24,6 +36,7 @@ class Potato
       eyes  : slotMachine.pull(@eyesFiles, string)
       nose  : slotMachine.pull(@noseFiles, string)
       mouth : slotMachine.pull(@mouthFiles, string)
+      color : slotMachine.pull(@colors, string)
     }
 
 
