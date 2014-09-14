@@ -39,5 +39,4 @@ class Potato
       color : slotMachine.pull(@colors, string)
     }
 
-
 module.exports = new Potato()
