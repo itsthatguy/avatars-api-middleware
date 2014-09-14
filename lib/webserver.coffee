@@ -72,7 +72,7 @@ router.get '/avatar/:name', (req, res, next) ->
 
 # Avatars: Route with custom Size
 router.get '/avatar/:size/:name', (req, res, next) ->
-  imager.resize req.faceParts, req.params.size, (err, stdout) ->
+  imager.combine req.faceParts, req.params.size, (err, stdout) ->
     sendImage(err, stdout, req, res, next)
 
 app.use('/', router)
