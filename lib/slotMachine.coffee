@@ -1,21 +1,23 @@
 class SlotMachine
-  constructor: (slots) ->
+  constructor: (slots, hashingFn) ->
     @slots = slots
     @numSlots = @slots.length
+    @hashingFn = hashingFn || @_defaultHashingFn
 
   pull: (string) ->
     str = string.replace(/\.(png|jpg|gif|)$/g, "")
     stringArray = str.split('')
-    return @slots[@_compute(stringArray)]
+    return @slots[@_indexFor(stringArray)]
 
-  _compute: (array) ->
-    array
-    .map(@_getCharInt)
-    .reduce(@_sumModulo(@numSlots), 0)
+  _indexFor: (array) ->
+    intArray = array.map(@_getCharInt)
+    @hashingFn(intArray) % @numSlots
+
+  _defaultHashingFn: (array) ->
+    array.reduce(@_sum, 0)
 
   _getCharInt: (char) -> parseInt char.charCodeAt(0) or 0
 
-  _sumModulo: (modulus) ->
-    (a, b) -> (a + b) % modulus
+  _sum: (a, b) -> (a + b)
 
 module.exports = SlotMachine

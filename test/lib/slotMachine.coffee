@@ -5,10 +5,10 @@ describe 'SlotMachine', ->
   slotMachine = files = null
 
   beforeEach ->
-    files = ['file1', 'file2', 'file3']
+    files = ['file1', 'file2', 'file3', 'file4']
     slotMachine = new SlotMachine(files)
 
-  describe 'slots an identifier', ->
+  describe 'slotting an identifier', ->
     it 'pulls an empty string', ->
       expect(slotMachine.pull('')).to.be.ok
 
@@ -27,3 +27,20 @@ describe 'SlotMachine', ->
         image = slotMachine.pull(randomString)
 
         expect(files).to.include(image)
+
+  describe 'initializing with a hashing function', ->
+    customSlotMachine = hashingFn = null
+
+    beforeEach ->
+      customSlotMachine = new SlotMachine files, (array) ->
+        array.reduce(((a, b) -> a * b), 0)
+
+    it 'pulls a string to the same image', ->
+      for run in [1..100]
+        image = customSlotMachine.pull('string')
+
+        expect(image).to.equal('file1')
+
+    it 'pulls to a different string than the default slotMachine', ->
+      expect(customSlotMachine.pull('string'))
+        .not.to.equal(slotMachine.pull('string'))
