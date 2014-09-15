@@ -3,7 +3,7 @@ fs            = require('fs')
 path          = require('path')
 
 # our libs
-slotMachine   = require('./slotMachine.coffee')
+SlotMachine   = require('./slotMachine.coffee')
 
 basePath      = path.join(__dirname, '..')
 generatedPath = path.join(basePath, '.generated')
@@ -22,9 +22,10 @@ class Potato
   ]
 
   constructor: ->
-    @eyesFiles  = @files('eyes')
-    @noseFiles  = @files('nose')
-    @mouthFiles = @files('mouth')
+    @colorMachine = new SlotMachine(@colors)
+    @eyesMachine  = new SlotMachine(@files('eyes'))
+    @noseMachine  = new SlotMachine(@files('nose'))
+    @mouthMachine = new SlotMachine(@files('mouth'))
 
   files: (part) ->
     fs.readdirSync(path.join(generatedPath, 'img', part)).map (val) ->
@@ -33,10 +34,10 @@ class Potato
   # Construct Faces Parts
   parts: (string) ->
     return {
-      eyes  : slotMachine.pull(@eyesFiles, string)
-      nose  : slotMachine.pull(@noseFiles, string)
-      mouth : slotMachine.pull(@mouthFiles, string)
-      color : slotMachine.pull(@colors, string)
+      color : @colorMachine.pull(string)
+      eyes  : @eyesMachine.pull(string)
+      nose  : @noseMachine.pull(string)
+      mouth : @mouthMachine.pull(string)
     }
 
 module.exports = new Potato()
