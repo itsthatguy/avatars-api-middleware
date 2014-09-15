@@ -25,7 +25,8 @@ class Potato
     @colorMachine = new SlotMachine(@colors)
     @eyesMachine  = new SlotMachine(@files('eyes'))
     @noseMachine  = new SlotMachine(@files('nose'))
-    @mouthMachine = new SlotMachine(@files('mouth'))
+    @mouthMachine = new SlotMachine @files('mouth'), (array) ->
+      array.reduce(((a, b) -> a * b), 0)
 
   files: (part) ->
     fs.readdirSync(path.join(generatedPath, 'img', part)).map (val) ->
