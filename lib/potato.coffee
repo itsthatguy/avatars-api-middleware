@@ -3,7 +3,8 @@ fs            = require('fs')
 path          = require('path')
 
 # our libs
-SlotMachine   = require('./slotMachine.coffee')
+SlotMachine      = require('./slotMachine.coffee')
+HashingFunctions = require('./hashingFunctions')
 
 basePath      = path.join(__dirname, '..')
 generatedPath = path.join(basePath, '.generated')
@@ -25,8 +26,7 @@ class Potato
     @colorMachine = new SlotMachine(@colors)
     @eyesMachine  = new SlotMachine(@files('eyes'))
     @noseMachine  = new SlotMachine(@files('nose'))
-    @mouthMachine = new SlotMachine @files('mouth'), (array) ->
-      array.reduce(((a, b) -> a * b), 0)
+    @mouthMachine = new SlotMachine(@files('mouth'), HashingFunctions.product)
 
   files: (part) ->
     fs.readdirSync(path.join(generatedPath, 'img', part)).map (val) ->

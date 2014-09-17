@@ -1,8 +1,10 @@
+sum = require('./hashingFunctions').sum
+
 class SlotMachine
   constructor: (slots, hashingFn) ->
     @slots = slots
     @numSlots = @slots.length
-    @hashingFn = hashingFn || @_defaultHashingFn
+    @hashingFn = hashingFn || sum
 
   pull: (string) ->
     str = string.replace(/\.(png|jpg|gif|)$/g, "")
@@ -13,11 +15,6 @@ class SlotMachine
     intArray = array.map(@_getCharInt)
     @hashingFn(intArray) % @numSlots
 
-  _defaultHashingFn: (array) ->
-    array.reduce(@_sum, 0)
-
   _getCharInt: (char) -> parseInt char.charCodeAt(0) or 0
-
-  _sum: (a, b) -> (a + b)
 
 module.exports = SlotMachine
