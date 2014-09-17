@@ -9,7 +9,7 @@ module.exports = class
     array.reverse().reduce(@_addition, 0)
 
   @product: (array) =>
-    array.reduce(@_multiplication, 0)
+    array.reduce(@_multiplication, 1)
 
   @reverseProduct: (array) =>
-    array.reverse().reduce(@_multiplication, 0)
+    array.reverse().reduce(@_multiplication, 1)

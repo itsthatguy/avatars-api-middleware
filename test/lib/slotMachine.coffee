@@ -29,11 +29,11 @@ describe 'SlotMachine', ->
         expect(files).to.include(image)
 
   describe 'initializing with a hashing function', ->
-    customSlotMachine = hashingFn = null
+    HashingFunctions = require('../../lib/hashingFunctions')
+    customSlotMachine = null
 
     beforeEach ->
-      customSlotMachine = new SlotMachine files, (array) ->
-        array.reduce(((a, b) -> a * b), 0)
+      customSlotMachine = new SlotMachine files, HashingFunctions.product
 
     it 'pulls a string to the same image', ->
       for run in [1..100]
@@ -44,3 +44,7 @@ describe 'SlotMachine', ->
     it 'pulls to a different string than the default slotMachine', ->
       expect(customSlotMachine.pull('string'))
         .not.to.equal(slotMachine.pull('string'))
+
+    it 'pulls to different strings', ->
+      expect(customSlotMachine.pull('string'))
+        .not.to.equal(customSlotMachine.pull('foo'))
