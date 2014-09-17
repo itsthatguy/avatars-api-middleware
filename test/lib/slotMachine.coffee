@@ -19,7 +19,7 @@ describe 'SlotMachine', ->
       for run in [1..100]
         image = slotMachine.pull('foo')
 
-        expect(image).to.equal('file1')
+        expect(image).to.equal('file4')
 
     it 'always pulls within the given set of files', ->
       for run in [1..100]
@@ -39,7 +39,7 @@ describe 'SlotMachine', ->
       for run in [1..100]
         image = customSlotMachine.pull('string')
 
-        expect(image).to.equal('file1')
+        expect(image).to.equal('file3')
 
     it 'pulls to a different string than the default slotMachine', ->
       expect(customSlotMachine.pull('string'))
