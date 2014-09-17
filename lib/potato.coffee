@@ -26,7 +26,7 @@ class Potato
     @colorMachine = new SlotMachine(@colors)
     @eyesMachine  = new SlotMachine(@files('eyes'))
     @noseMachine  = new SlotMachine(@files('nose'))
-    @mouthMachine = new SlotMachine(@files('mouth'), HashingFunctions.product)
+    @mouthMachine = new SlotMachine(@files('mouth'), HashingFunctions.sumAndDiff)
 
   files: (part) ->
     fs.readdirSync(path.join(generatedPath, 'img', part)).map (val) ->

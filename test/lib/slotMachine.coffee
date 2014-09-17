@@ -5,7 +5,7 @@ describe 'SlotMachine', ->
   slotMachine = files = null
 
   beforeEach ->
-    files = ['file1', 'file2', 'file3', 'file4']
+    files = ("file#{i}" for i in [1..5])
     slotMachine = new SlotMachine(files)
 
   describe 'slotting an identifier', ->
@@ -19,7 +19,7 @@ describe 'SlotMachine', ->
       for run in [1..100]
         image = slotMachine.pull('foo')
 
-        expect(image).to.equal('file4')
+        expect(image).to.equal('file3')
 
     it 'always pulls within the given set of files', ->
       for run in [1..100]
@@ -33,13 +33,13 @@ describe 'SlotMachine', ->
     customSlotMachine = null
 
     beforeEach ->
-      customSlotMachine = new SlotMachine files, HashingFunctions.product
+      customSlotMachine = new SlotMachine files, HashingFunctions.sumAndDiff
 
     it 'pulls a string to the same image', ->
       for run in [1..100]
         image = customSlotMachine.pull('string')
 
-        expect(image).to.equal('file3')
+        expect(image).to.equal('file2')
 
     it 'pulls to a different string than the default slotMachine', ->
       expect(customSlotMachine.pull('string'))
