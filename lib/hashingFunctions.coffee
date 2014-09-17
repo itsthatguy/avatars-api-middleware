@@ -5,11 +5,5 @@ module.exports = class
   @sum: (array) =>
     array.reduce(@_addition, 0)
 
-  @reverseSum: (array) =>
-    array.reverse().reduce(@_addition, 0)
-
   @product: (array) =>
     array.reduce(@_multiplication, 1)
-
-  @reverseProduct: (array) =>
-    array.reverse().reduce(@_multiplication, 1)
