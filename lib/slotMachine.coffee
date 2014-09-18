@@ -13,7 +13,8 @@ class SlotMachine
 
   _indexFor: (array) ->
     intArray = array.map(@_getCharInt)
-    (@hashingFn(intArray) + intArray.length) % @numSlots
+    index = (@hashingFn(intArray) + intArray.length) % @numSlots
+    Math.abs(index)
 
   _getCharInt: (char) -> parseInt char.charCodeAt(0) or 0
 
