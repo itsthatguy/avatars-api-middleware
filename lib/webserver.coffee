@@ -8,7 +8,6 @@ colors   = require('colors')
 
 # configuration
 app           = express()
-router        = require('./router.coffee')
 webserver     = http.createServer(app)
 basePath      = path.join(__dirname, '..')
 generatedPath = path.join(basePath, '.generated')
@@ -18,7 +17,12 @@ faviconPath   = path.join(basePath, 'app', 'favicon.ico')
 # Configure the express server
 app.engine('.html', require('ejs').__express)
 app.use(favicon(faviconPath))
-app.use('/', router)
+app.get '/', (req, res) ->
+  res.redirect('http://avatars.adorable.io')
+app.use('/avatar', require('./routes/v1'))
+app.use('/avatars', require('./routes/v2'))
+if process.env.NODE_ENV == 'production'
+  app.use(require('./tracker'))
 app.use('/assets', express.static(generatedPath))
 app.use('/vendor', express.static(vendorPath))
 
