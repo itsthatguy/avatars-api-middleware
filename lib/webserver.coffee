@@ -1,7 +1,6 @@
 # node packages
 http     = require('http')
 express  = require('express')
-fs       = require('fs')
 path     = require('path')
 favicon  = require('serve-favicon')
 findPort = require('find-port')
