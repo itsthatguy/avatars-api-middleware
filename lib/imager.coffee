@@ -11,7 +11,7 @@ class Imager
 
   combine: (face, size, callback) ->
     if callback?
-      size = @parseSize(size)
+      size = @_parseSize(size)
     else
       callback = size
       size = width: @maxSize, height: @maxSize
@@ -29,11 +29,11 @@ class Imager
       .background(face.color)
       .stream('png', callback)
 
-  clamp: (num) -> return Math.min(Math.max(num, @minSize), @maxSize)
+  _clamp: (num) -> return Math.min(Math.max(num, @minSize), @maxSize)
 
-  parseSize: (size) ->
+  _parseSize: (size) ->
     [width, height] = size.split("x")
     height?= width
-    return { width: @clamp(width), height: @clamp(height) }
+    return { width: @_clamp(width), height: @_clamp(height) }
 
 module.exports = new Imager()
