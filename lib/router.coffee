@@ -9,11 +9,13 @@ Tracker     = require('./tracker.coffee')
 imager      = require('./imager.coffee')
 potato      = require('./potato.coffee')
 
-# Helper function for the stream callback
+# Common definitions
 sendImage = (err, stdout, req, res, next) ->
   res.setHeader('Expires', new Date(Date.now() + 604800000))
   res.setHeader('Content-Type', 'image/png')
   stdout.pipe(res)
+
+imageDir = path.join(__dirname, '..', '.generated', 'img')
 
 # Tracking
 if process.env.NODE_ENV == 'production'
@@ -31,12 +33,11 @@ router.get '/', (req, res) ->
   res.redirect('http://avatars.adorable.io')
 
 # V1 (static)
-imagePath = path.join(__dirname, '..', '.generated', 'img')
-imageFiles = fs.readdirSync(imagePath)
+imageFiles = fs.readdirSync(imageDir)
                .filter (imageFile) ->
                  imageFile.match(/\.png/)
                .map (imageFile) ->
-                 path.join(imagePath, imageFile)
+                 path.join(imageDir, imageFile)
 
 imageSlotMachine = new SlotMachine(imageFiles)
 
@@ -70,7 +71,7 @@ router.get '/avatars/:size/:idV2', (req, res, next) ->
 
 # Avatars: Route with custom face parts
 router.get '/avatars/face/:eyes/:nose/:mouth/:color', (req, res, next) ->
-  pathFor = (type, name) -> path.join(imagePath, type, "#{name}.png")
+  pathFor = (type, name) -> path.join(imageDir, type, "#{name}.png")
   {eyes, nose, mouth, color} = req.params
 
   faceParts =
