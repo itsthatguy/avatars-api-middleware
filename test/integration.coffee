@@ -35,3 +35,9 @@ describe 'routing', ->
       request.get('/avatars/220/abott')
         .expect('Content-Type', /image/)
         .end(done)
+
+    it 'can manually compose an image', (done) ->
+      request.get('/avatars/face/eyes1/nose4/mouth11/bbb')
+        .expect(200)
+        .expect('Content-Type', /image/)
+        .end(done)

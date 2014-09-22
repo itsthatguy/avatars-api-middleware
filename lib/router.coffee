@@ -68,4 +68,18 @@ router.get '/avatars/:size/:idV2', (req, res, next) ->
   imager.combine req.faceParts, req.params.size, (err, stdout) ->
     sendImage(err, stdout, req, res, next)
 
+# Avatars: Route with custom face parts
+router.get '/avatars/face/:eyes/:nose/:mouth/:color', (req, res, next) ->
+  pathFor = (type, name) -> path.join(imagePath, type, "#{name}.png")
+  {eyes, nose, mouth, color} = req.params
+
+  faceParts =
+    eyes: pathFor('eyes', eyes)
+    nose: pathFor('nose', nose)
+    mouth: pathFor('mouth', mouth)
+    color: "##{color}"
+
+  imager.combine faceParts, (err, stdout) ->
+    sendImage(err, stdout, req, res, next)
+
 module.exports = router
