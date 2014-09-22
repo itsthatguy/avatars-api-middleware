@@ -2,9 +2,6 @@ path        = require('path')
 gm          = require('gm')
 imageMagick = gm.subClass({ imageMagick: true })
 
-basePath      = path.join(__dirname, '..')
-generatedPath = path.join(basePath, '.generated')
-
 class Imager
   minSize: 40
   maxSize: 400
