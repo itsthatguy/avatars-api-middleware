@@ -29,6 +29,15 @@ class Imager
       .background(face.color)
       .stream('png', callback)
 
+  resize: (imagePath, size, callback) ->
+    size = @_parseSize(size)
+
+    imageMagick(imagePath)
+      .resize(size.width, size.height)
+      .trim()
+      .autoOrient()
+      .stream('png', callback)
+
   _clamp: (num) -> return Math.min(Math.max(num, @minSize), @maxSize)
 
   _parseSize: (size) ->

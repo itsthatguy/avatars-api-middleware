@@ -49,7 +49,8 @@ router.get '/avatar/:idV1', (req, res, next) ->
   res.sendFile(req.imagePath)
 
 router.get '/avatar/:size/:idV1', (req, res, next) ->
-  res.sendFile(req.imagePath)
+  imager.resize req.imagePath, req.params.size, (err, stdout) ->
+    sendImage(err, stdout, req, res, next)
 
 # V2 (dynamic)
 router.param 'idV2', (req, res, next, id) ->
