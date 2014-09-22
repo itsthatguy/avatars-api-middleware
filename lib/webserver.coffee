@@ -7,14 +7,9 @@ favicon  = require('serve-favicon')
 findPort = require('find-port')
 colors   = require('colors')
 
-# our libs
-potato  = require('./potato.coffee')
-imager  = require('./imager.coffee')
-tracker = require('./tracker.coffee')
-
 # configuration
 app           = express()
-router        = express.Router()
+router        = require('./router.coffee')
 webserver     = http.createServer(app)
 basePath      = path.join(__dirname, '..')
 generatedPath = path.join(basePath, '.generated')
@@ -24,11 +19,11 @@ faviconPath   = path.join(basePath, 'app', 'favicon.ico')
 # Configure the express server
 app.engine('.html', require('ejs').__express)
 app.use(favicon(faviconPath))
+app.use('/', router)
 app.use('/assets', express.static(generatedPath))
 app.use('/vendor', express.static(vendorPath))
 
 port = process.env.PORT || 3002
-env = process.env.NODE_ENV
 
 # Find an available port
 if port > 3002
@@ -41,49 +36,5 @@ else
 webserver.on 'listening', ->
   address = webserver.address()
   console.log "[Firepit] Server running at http://#{address.address}:#{address.port}".green
-
-#
-# Routing
-# -----------------
-
-# Helper function for the stream callback
-sendImage = (err, stdout, req, res, next) ->
-  res.setHeader('Expires', new Date(Date.now() + 604800000))
-  res.setHeader('Content-Type', 'image/png')
-  stdout.pipe(res)
-
-# Determine which avatar to serve
-router.param 'name', (req, res, next, id) ->
-  faceParts = potato.parts(id)
-
-  req.faceParts = faceParts
-  next()
-
-# Tracking
-if env == 'production'
-  router.use (req, res, next) ->
-    tracker.track(
-      'API request',
-      url: req.url,
-      referrer: req.get('Referrer'),
-      ip: req.ip,
-      next
-    )
-
-# Root
-router.get '/', (req, res) ->
-  res.redirect('http://avatars.adorable.io')
-
-# Avatars: Basic Route
-router.get '/avatar/:name', (req, res, next) ->
-  imager.combine req.faceParts, (err, stdout) ->
-    sendImage(err, stdout, req, res, next)
-
-# Avatars: Route with custom Size
-router.get '/avatar/:size/:name', (req, res, next) ->
-  imager.combine req.faceParts, req.params.size, (err, stdout) ->
-    sendImage(err, stdout, req, res, next)
-
-app.use('/', router)
 
 module.exports = webserver
