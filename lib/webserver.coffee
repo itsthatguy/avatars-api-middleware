@@ -10,7 +10,7 @@ colors   = require('colors')
 # our libs
 potato  = require('./potato.coffee')
 imager  = require('./imager.coffee')
-Tracker = require('./tracker.coffee')
+tracker = require('./tracker.coffee')
 
 # configuration
 app           = express()
@@ -27,8 +27,10 @@ app.use(favicon(faviconPath))
 app.use('/assets', express.static(generatedPath))
 app.use('/vendor', express.static(vendorPath))
 
-# Find an available port
 port = process.env.PORT || 3002
+env = process.env.NODE_ENV
+
+# Find an available port
 if port > 3002
   webserver.listen(port)
 else
@@ -58,8 +60,15 @@ router.param 'name', (req, res, next, id) ->
   next()
 
 # Tracking
-router.use (req, res, next) ->
-  Tracker.trackPage('API request', req.url, next)
+if env == 'production'
+  router.use (req, res, next) ->
+    tracker.track(
+      'API request',
+      url: req.url,
+      referrer: req.get('Referrer'),
+      ip: req.ip,
+      next
+    )
 
 # Root
 router.get '/', (req, res) ->
