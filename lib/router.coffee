@@ -32,7 +32,7 @@ if process.env.NODE_ENV == 'production'
 router.get '/', (req, res) ->
   res.redirect('http://avatars.adorable.io')
 
-# V1 (static)
+## V1 (STATIC)
 imageFiles = fs.readdirSync(imageDir)
                .filter (imageFile) ->
                  imageFile.match(/\.png/)
@@ -49,27 +49,27 @@ router.param 'idV1', (req, res, next, id) ->
 router.get '/avatar/:idV1', (req, res, next) ->
   res.sendFile(req.imagePath)
 
+# with custom size
 router.get '/avatar/:size/:idV1', (req, res, next) ->
   imager.resize req.imagePath, req.params.size, (err, stdout) ->
     sendImage(err, stdout, req, res, next)
 
-# V2 (dynamic)
+## V2 (DYNAMIC)
 router.param 'idV2', (req, res, next, id) ->
   faceParts = potato.parts(id)
   req.faceParts = faceParts
   next()
 
-# Avatars: Basic Route
 router.get '/avatars/:idV2', (req, res, next) ->
   imager.combine req.faceParts, (err, stdout) ->
     sendImage(err, stdout, req, res, next)
 
-# Avatars: Route with custom Size
+# with custom size
 router.get '/avatars/:size/:idV2', (req, res, next) ->
   imager.combine req.faceParts, req.params.size, (err, stdout) ->
     sendImage(err, stdout, req, res, next)
 
-# Avatars: Route with custom face parts
+# with custom face parts
 router.get '/avatars/face/:eyes/:nose/:mouth/:color', (req, res, next) ->
   pathFor = (type, name) -> path.join(imageDir, type, "#{name}.png")
   {eyes, nose, mouth, color} = req.params
