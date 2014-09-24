@@ -20,7 +20,6 @@ class Imager
       .mosaic()
       .resize(size.width, size.height)
       .trim()
-      .autoOrient()
       .gravity('Center')
       .extent(size.width, size.height)
       .background(face.color)
