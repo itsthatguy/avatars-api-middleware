@@ -17,12 +17,12 @@ class Imager
       .in(face.eyes)
       .in(face.nose)
       .in(face.mouth)
+      .background(face.color)
       .mosaic()
       .resize(size.width, size.height)
       .trim()
       .gravity('Center')
       .extent(size.width, size.height)
-      .background(face.color)
       .stream('png', callback)
 
   resize: (imagePath, size, callback) ->
