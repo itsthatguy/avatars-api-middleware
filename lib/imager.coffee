@@ -14,6 +14,7 @@ class Imager
       size = width: @maxSize, height: @maxSize
 
     imageMagick()
+      .quality(0)
       .in(face.eyes)
       .in(face.nose)
       .in(face.mouth)
