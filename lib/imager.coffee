@@ -2,38 +2,42 @@ path        = require('path')
 gm          = require('gm')
 imageMagick = gm.subClass({ imageMagick: true })
 
-basePath      = path.join(__dirname, '..')
-generatedPath = path.join(basePath, '.generated')
-
 class Imager
   minSize: 40
   maxSize: 400
 
   combine: (face, size, callback) ->
     if callback?
-      size = @parseSize(size)
+      size = @_parseSize(size)
     else
       callback = size
       size = width: @maxSize, height: @maxSize
 
     imageMagick()
+      .quality(0)
       .in(face.eyes)
       .in(face.nose)
       .in(face.mouth)
+      .background(face.color)
       .mosaic()
       .resize(size.width, size.height)
       .trim()
-      .autoOrient()
       .gravity('Center')
       .extent(size.width, size.height)
-      .background(face.color)
       .stream('png', callback)
 
-  clamp: (num) -> return Math.min(Math.max(num, @minSize), @maxSize)
+  resize: (imagePath, size, callback) ->
+    size = @_parseSize(size)
 
-  parseSize: (size) ->
+    imageMagick(imagePath)
+      .resize(size.width, size.height)
+      .stream('png', callback)
+
+  _clamp: (num) -> return Math.min(Math.max(num, @minSize), @maxSize)
+
+  _parseSize: (size) ->
     [width, height] = size.split("x")
     height?= width
-    return { width: @clamp(width), height: @clamp(height) }
+    return { width: @_clamp(width), height: @_clamp(height) }
 
 module.exports = new Imager()
