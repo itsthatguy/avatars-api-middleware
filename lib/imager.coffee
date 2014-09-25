@@ -31,8 +31,6 @@ class Imager
 
     imageMagick(imagePath)
       .resize(size.width, size.height)
-      .trim()
-      .autoOrient()
       .stream('png', callback)
 
   _clamp: (num) -> return Math.min(Math.max(num, @minSize), @maxSize)
