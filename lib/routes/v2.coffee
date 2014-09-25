@@ -1,9 +1,9 @@
-path   = require('path')
 router = require('express').Router()
 
-common = require('./common.coffee')
-imager = require('../imager.coffee')
-potato = require('../potato.coffee')
+ImageFiles = require('../imageFiles.coffee')
+common     = require('./common.coffee')
+imager     = require('../imager.coffee')
+potato     = require('../potato.coffee')
 
 router.param 'id', (req, res, next, id) ->
   faceParts = potato.parts(id)
@@ -21,14 +21,20 @@ router.get '/:size/:id', (req, res, next) ->
 
 # with custom face parts
 router.get '/face/:eyes/:nose/:mouth/:color', (req, res, next) ->
-  pathFor = (type, name) -> path.join(common.imageDir, type, "#{name}.png")
-  {eyes, nose, mouth, color} = req.params
+  faceParts = color: "##{req.params.color}"
 
-  faceParts =
-    eyes: pathFor('eyes', eyes)
-    nose: pathFor('nose', nose)
-    mouth: pathFor('mouth', mouth)
-    color: "##{color}"
+  ['eyes', 'nose', 'mouth'].forEach (type) ->
+    possibleFileNames = ImageFiles.allNames(type)
+    requestedFileName = req.params[type]
+
+    fileName = if requestedFileName in possibleFileNames
+      requestedFileName
+    else if requestedFileName == 'x'
+      ''
+    else
+      possibleFileNames[0]
+
+    faceParts[type] = ImageFiles.pathFor(type, fileName)
 
   imager.combine faceParts, (err, stdout) ->
     common.sendImage(err, stdout, req, res, next)

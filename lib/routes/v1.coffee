@@ -1,17 +1,11 @@
-fs     = require('fs')
-path   = require('path')
 router = require('express').Router()
 
+ImageFiles  = require('../ImageFiles.coffee')
 SlotMachine = require('../slotMachine.coffee')
 common      = require('./common.coffee')
 imager      = require('../imager.coffee')
 
-imageFiles = fs.readdirSync(common.imageDir)
-               .filter (imageFile) ->
-                 imageFile.match(/\.png/)
-               .map (imageFile) ->
-                 path.join(common.imageDir, imageFile)
-
+imageFiles = ImageFiles.allPaths()
 imageSlotMachine = new SlotMachine(imageFiles)
 
 router.param 'id', (req, res, next, id) ->
