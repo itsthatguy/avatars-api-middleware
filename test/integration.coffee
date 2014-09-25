@@ -1,5 +1,13 @@
 supertest = require('supertest')
 webserver = require('../lib/webserver')
+expect    = require('chai').expect
+gm = require('gm')
+
+parseImage = (res, callback) ->
+  res.setEncoding('binary')
+  res.data = ''
+  res.on 'data', (chunk) -> res.data += chunk
+  res.on 'end', -> callback(null, new Buffer(res.data, 'binary'))
 
 describe 'routing', ->
   request = null
@@ -21,9 +29,12 @@ describe 'routing', ->
         .end(done)
 
     it 'can resize an image', (done) ->
-      request.get('/avatar/220/abott')
-        .expect('Content-Type', /image/)
-        .end(done)
+      request.get('/avatar/230/abott')
+        .parse(parseImage)
+        .end (err, res) ->
+          gm(res.body).size (err, size) ->
+            expect(size).to.eql(height: 230, width: 230)
+            done()
 
   describe 'v2 avatar request', ->
     it 'responds with an image', (done) ->
@@ -33,8 +44,11 @@ describe 'routing', ->
 
     it 'can resize an image', (done) ->
       request.get('/avatars/220/abott')
-        .expect('Content-Type', /image/)
-        .end(done)
+        .parse(parseImage)
+        .end (err, res) ->
+          gm(res.body).size (err, size) ->
+            expect(size).to.eql(height: 220, width: 220)
+            done()
 
     it 'can manually compose an image', (done) ->
       request.get('/avatars/face/eyes1/nose4/mouth11/bbb')
