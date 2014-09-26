@@ -1,6 +1,6 @@
 router = require('express').Router()
 
-ImageFiles  = require('../ImageFiles.coffee')
+ImageFiles  = require('../imageFiles.coffee')
 SlotMachine = require('../slotMachine.coffee')
 common      = require('./common.coffee')
 imager      = require('../imager.coffee')
