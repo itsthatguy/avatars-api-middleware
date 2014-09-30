@@ -5,10 +5,10 @@ describe 'SlotMachine', ->
   slotMachine = files = null
 
   beforeEach ->
-    files = ['file1', 'file2', 'file3']
+    files = ("file#{i}" for i in [1..5])
     slotMachine = new SlotMachine(files)
 
-  describe 'slots an identifier', ->
+  describe 'slotting an identifier', ->
     it 'pulls an empty string', ->
       expect(slotMachine.pull('')).to.be.ok
 
@@ -19,7 +19,7 @@ describe 'SlotMachine', ->
       for run in [1..100]
         image = slotMachine.pull('foo')
 
-        expect(image).to.equal('file1')
+        expect(image).to.equal('file3')
 
     it 'always pulls within the given set of files', ->
       for run in [1..100]
@@ -27,3 +27,24 @@ describe 'SlotMachine', ->
         image = slotMachine.pull(randomString)
 
         expect(files).to.include(image)
+
+  describe 'initializing with a hashing function', ->
+    HashingFunctions = require('../../lib/hashingFunctions')
+    customSlotMachine = null
+
+    beforeEach ->
+      customSlotMachine = new SlotMachine files, HashingFunctions.sumAndDiff
+
+    it 'pulls a string to the same image', ->
+      for run in [1..100]
+        image = customSlotMachine.pull('string')
+
+        expect(image).to.equal('file2')
+
+    it 'pulls to a different string than the default slotMachine', ->
+      expect(customSlotMachine.pull('string'))
+        .not.to.equal(slotMachine.pull('string'))
+
+    it 'pulls to different strings', ->
+      expect(customSlotMachine.pull('string'))
+        .not.to.equal(customSlotMachine.pull('foo'))
