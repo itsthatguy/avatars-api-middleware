@@ -1,13 +1,7 @@
-# node libs
-fs            = require('fs')
-path          = require('path')
-
 # our libs
+HashingFunctions = require('./hashingFunctions.coffee')
+ImageFiles       = require('./imageFiles.coffee')
 SlotMachine      = require('./slotMachine.coffee')
-HashingFunctions = require('./hashingFunctions')
-
-basePath      = path.join(__dirname, '..')
-generatedPath = path.join(basePath, '.generated')
 
 class Potato
   colors: [
@@ -24,13 +18,9 @@ class Potato
 
   constructor: ->
     @colorMachine = new SlotMachine(@colors)
-    @eyesMachine  = new SlotMachine(@files('eyes'))
-    @noseMachine  = new SlotMachine(@files('nose'))
-    @mouthMachine = new SlotMachine(@files('mouth'), HashingFunctions.sumAndDiff)
-
-  files: (part) ->
-    fs.readdirSync(path.join(generatedPath, 'img', part)).map (val) ->
-      path.join(generatedPath, 'img', part, val)
+    @eyesMachine  = new SlotMachine(ImageFiles.allPaths('eyes'))
+    @noseMachine  = new SlotMachine(ImageFiles.allPaths('nose'))
+    @mouthMachine = new SlotMachine(ImageFiles.allPaths('mouth'), HashingFunctions.sumAndDiff)
 
   # Construct Faces Parts
   parts: (string) ->
