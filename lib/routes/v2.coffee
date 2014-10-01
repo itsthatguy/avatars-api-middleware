@@ -11,6 +11,15 @@ router.param 'id', (req, res, next, id) ->
   req.faceParts = faceParts
   next()
 
+router.get '/list', (req, res, next) ->
+  response = {}
+  partTypes.forEach (type) ->
+    response[type] = ImageFiles.allNames(type)
+
+  res
+    .set('Content-Type', 'application/json')
+    .send(response)
+
 router.get '/:id', (req, res, next) ->
   imager.combine req.faceParts, (err, stdout) ->
     common.sendImage(err, stdout, req, res, next)
