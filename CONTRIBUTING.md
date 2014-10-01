@@ -30,6 +30,7 @@ process easy and effective for everyone involved.
 
    ```bash
    npm install
+   brew install imagemagick
    ```
 
 4. Create a new topic branch (off the main project development branch) to

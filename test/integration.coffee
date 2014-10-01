@@ -1,7 +1,7 @@
 supertest = require('supertest')
 webserver = require('../lib/webserver')
 expect    = require('chai').expect
-gm = require('gm')
+im        = require('gm').subClass(imageMagick: true)
 
 parseImage = (res, callback) ->
   res.setEncoding('binary')
@@ -32,7 +32,7 @@ describe 'routing', ->
       request.get('/avatar/230/abott')
         .parse(parseImage)
         .end (err, res) ->
-          gm(res.body).size (err, size) ->
+          im(res.body).size (err, size) ->
             expect(size).to.eql(height: 230, width: 230)
             done()
 
@@ -46,7 +46,7 @@ describe 'routing', ->
       request.get('/avatars/220/abott')
         .parse(parseImage)
         .end (err, res) ->
-          gm(res.body).size (err, size) ->
+          im(res.body).size (err, size) ->
             expect(size).to.eql(height: 220, width: 220)
             done()
 
