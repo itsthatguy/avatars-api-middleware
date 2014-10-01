@@ -6,7 +6,8 @@ imager     = require('../imager.coffee')
 potato     = require('../potato.coffee')
 
 router.param 'id', (req, res, next, id) ->
-  faceParts = potato.parts(id)
+  decodedId = decodeURIComponent(id)
+  faceParts = potato.parts(decodedId)
   req.faceParts = faceParts
   next()
 
