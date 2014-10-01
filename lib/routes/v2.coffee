@@ -13,8 +13,9 @@ router.param 'id', (req, res, next, id) ->
 
 router.get '/list', (req, res, next) ->
   response = {}
+  parts = response.parts = {}
   partTypes.forEach (type) ->
-    response[type] = ImageFiles.allNames(type)
+    parts[type] = ImageFiles.allNames(type)
 
   res
     .set('Content-Type', 'application/json')
