@@ -1,15 +1,13 @@
-Tracker = require('mixpanel')
-router = require('express').Router()
+ua = require('universal-analytics')
 
-projectToken = '489a8cc0db758b483e9db84d765c88ee'
-tracker = Tracker.init(projectToken)
-tracker.config.track_ip = true
+visitor = ua('UA-49535937-3')
 
-module.exports = router.use (req, res, next) ->
-  tracker.track(
-    'API request',
-    url: req.url,
-    referrer: req.get('Referrer'),
-    ip: req.ip,
-    next
-  )
+module.exports = (req, res, next) ->
+  eventParams =
+    ec: 'API Request'                        # category
+    ea: req.get('Referrer') || 'no referrer' # action
+    el: req.ip                               # label
+    dp: req.url                              # page path
+
+  visitor.event(eventParams).send()
+  next()
