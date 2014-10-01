@@ -19,10 +19,10 @@ app.engine('.html', require('ejs').__express)
 app.use(favicon(faviconPath))
 app.get '/', (req, res) ->
   res.redirect('http://avatars.adorable.io')
-app.use('/avatar', require('./routes/v1'))
-app.use('/avatars', require('./routes/v2'))
 if process.env.NODE_ENV == 'production'
   app.use(require('./tracker'))
+app.use('/avatar', require('./routes/v1'))
+app.use('/avatars', require('./routes/v2'))
 app.use('/assets', express.static(generatedPath))
 app.use('/vendor', express.static(vendorPath))
 
