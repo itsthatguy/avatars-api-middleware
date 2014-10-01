@@ -4,11 +4,21 @@ ImageFiles = require('../imageFiles.coffee')
 common     = require('./common.coffee')
 imager     = require('../imager.coffee')
 potato     = require('../potato.coffee')
+partTypes  = ['eyes', 'nose', 'mouth']
 
 router.param 'id', (req, res, next, id) ->
   faceParts = potato.parts(id)
   req.faceParts = faceParts
   next()
+
+router.get '/list', (req, res, next) ->
+  response = {}
+  partTypes.forEach (type) ->
+    response[type] = ImageFiles.allNames(type)
+
+  res
+    .set('Content-Type', 'application/json')
+    .send(response)
 
 router.get '/:id', (req, res, next) ->
   imager.combine req.faceParts, (err, stdout) ->
@@ -23,7 +33,7 @@ router.get '/:size/:id', (req, res, next) ->
 router.get '/face/:eyes/:nose/:mouth/:color', (req, res, next) ->
   faceParts = color: "##{req.params.color}"
 
-  ['eyes', 'nose', 'mouth'].forEach (type) ->
+  partTypes.forEach (type) ->
     possibleFileNames = ImageFiles.allNames(type)
     requestedFileName = req.params[type]
 
