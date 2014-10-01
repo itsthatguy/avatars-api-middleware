@@ -9,4 +9,5 @@ module.exports = (req, res, next) ->
     el: req.ip                               # label
     dp: req.url                              # page path
 
-  visitor.event(eventParams, next)
+  visitor.event(eventParams).send()
+  next()
