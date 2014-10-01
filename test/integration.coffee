@@ -63,5 +63,5 @@ describe 'routing', ->
         .end (err, res) ->
           jsonResponse = JSON.parse(res.text)
           responseKeys = Object.keys(jsonResponse)
-          expect(responseKeys).to.include('eyes', 'mouth', 'nose')
+          expect(responseKeys).to.include('parts', 'eyes', 'mouth', 'nose')
           done()
