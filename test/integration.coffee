@@ -56,12 +56,12 @@ describe 'routing', ->
         .expect('Content-Type', /image/)
         .end(done)
 
-  describe 'v2 avatar list request', ->
+  describe 'v2 avatar list requests', ->
     it 'responds with json', (done) ->
       request.get('/avatars/list')
         .expect('Content-Type', /json/)
         .end (err, res) ->
           jsonResponse = JSON.parse(res.text)
           responseKeys = Object.keys(jsonResponse)
-          expect(responseKeys).to.include('parts', 'eyes', 'mouth', 'nose')
+          expect(responseKeys).to.include('face', 'eyes', 'mouth', 'nose')
           done()
