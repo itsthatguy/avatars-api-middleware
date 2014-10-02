@@ -60,8 +60,11 @@ describe 'routing', ->
     it 'responds with json', (done) ->
       request.get('/avatars/list')
         .expect('Content-Type', /json/)
+        .end(done)
+
+    it 'responds with a list of possible face parts', (done) ->
+      request.get('/avatars/list')
         .end (err, res) ->
-          jsonResponse = JSON.parse(res.text)
-          responseKeys = Object.keys(jsonResponse)
-          expect(responseKeys).to.include('face', 'eyes', 'mouth', 'nose')
+          faceParts = res.body.face
+          expect(faceParts).to.have.keys('eyes', 'mouth', 'nose')
           done()
