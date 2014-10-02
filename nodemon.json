@@ -2,6 +2,7 @@
   "ext": "*.coffee",
   "watch": [
     "lib/*.coffee",
+    "lib/**/*.coffee",
     "app.coffee",
     "start.js",
     "data/*.*"
