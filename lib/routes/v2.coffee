@@ -11,10 +11,11 @@ router.param 'id', (req, res, next, id) ->
   req.faceParts = faceParts
   next()
 
+# list out face part possibilities
 router.get '/list', (req, res, next) ->
-  response = {}
+  response = face: {}
   partTypes.forEach (type) ->
-    response[type] = ImageFiles.allNames(type)
+    response.face[type] = ImageFiles.allNames(type)
 
   res
     .set('Content-Type', 'application/json')
