@@ -1,8 +1,8 @@
 ua = require('universal-analytics')
 
-visitor = ua('UA-49535937-3')
-
 module.exports = (req, res, next) ->
+  visitor = ua('UA-49535937-3')
+
   eventParams =
     ec: 'API Request'                        # category
     ea: req.get('Referrer') || 'no referrer' # action
