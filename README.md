@@ -1,5 +1,5 @@
 # adorable-avatars
-[![Build Status](https://travis-ci.org/adorableio/adorable-avatars.svg?branch=master)](https://travis-ci.org/adorableio/adorable-avatars)
+[![Build Status](https://travis-ci.org/adorableio/avatars-api.svg?branch=master)](https://travis-ci.org/adorableio/avatars-api?branch=master)
 
 ## What is it?
 
