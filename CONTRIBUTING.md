@@ -16,7 +16,7 @@ process easy and effective for everyone involved.
    # Navigate to the newly cloned directory
    cd adorable-avatars
    # Assign the original repo to a remote called "upstream"
-   git remote add upstream https://github.com/adorable/adorable-avatars.git
+   git remote add upstream https://github.com/adorableio/avatars-api.git
    ```
 
 2. If you cloned a while ago, get the latest changes from upstream:
