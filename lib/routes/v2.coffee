@@ -27,11 +27,12 @@ router.get '/:id', (req, res, next) ->
 
 # with custom size
 router.get '/:size/:id', (req, res, next) ->
-  imager.combine req.faceParts, req.params.size, (err, stdout) ->
+  imager.combine req.faceParts, (err, stdout) ->
     common.sendImage(err, stdout, req, res, next)
+  , req.params.size
 
 # with custom face parts
-router.get '/face/:eyes/:nose/:mouth/:color', (req, res, next) ->
+router.get '/face/:eyes/:nose/:mouth/:color/:size?', (req, res, next) ->
   faceParts = color: "##{req.params.color}"
 
   partTypes.forEach (type) ->
@@ -49,5 +50,6 @@ router.get '/face/:eyes/:nose/:mouth/:color', (req, res, next) ->
 
   imager.combine faceParts, (err, stdout) ->
     common.sendImage(err, stdout, req, res, next)
+  , req.params.size
 
 module.exports = router

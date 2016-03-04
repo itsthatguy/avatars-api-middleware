@@ -5,11 +5,10 @@ class Imager
   minSize: 40
   maxSize: 400
 
-  combine: (face, size, callback) ->
-    if callback?
+  combine: (face, callback, size) ->
+    if size
       size = @_parseSize(size)
     else
-      callback = size
       size = width: @maxSize, height: @maxSize
 
     imageMagick()
