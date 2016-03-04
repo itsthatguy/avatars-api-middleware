@@ -14,7 +14,7 @@ process easy and effective for everyone involved.
    # Clone your fork of the repo into the current directory
    git clone https://github.com/<your-username>/adorable-avatars.git
    # Navigate to the newly cloned directory
-   cd adorable-avatars
+   cd avatars-api
    # Assign the original repo to a remote called "upstream"
    git remote add upstream https://github.com/adorableio/avatars-api.git
    ```
