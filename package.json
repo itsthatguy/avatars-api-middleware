@@ -37,6 +37,8 @@
     "gulp-util": "^2.2.14",
     "newrelic": "^1.27.2",
     "nodemon": "^1.2.0",
+    "pg": "^4.5.5",
+    "pg-promise": "^4.2.0",
     "run-command": "^0.1.4",
     "run-sequence": "^0.3.6",
     "serve-favicon": "^2.0.1",
