@@ -9,7 +9,8 @@ class SlotMachine
   pull: (string) ->
     str = string.replace(/\.(png|jpg|gif|)$/g, "")
     stringArray = str.split('')
-    return @slots[@_indexFor(stringArray)]
+    index = @_indexFor(stringArray)
+    return [index, @slots[index]]
 
   _indexFor: (array) ->
     intArray = array.map(@_getCharInt)

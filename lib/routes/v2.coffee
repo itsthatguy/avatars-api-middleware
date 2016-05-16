@@ -7,8 +7,9 @@ potato     = require('../potato.coffee')
 partTypes  = ['eyes', 'nose', 'mouth']
 
 router.param 'id', (req, res, next, id) ->
-  faceParts = potato.parts(id)
+  [faceKey, faceParts] = potato.parts(id)
   req.faceParts = faceParts
+  req.faceKey = faceKey
   next()
 
 # list out face part possibilities

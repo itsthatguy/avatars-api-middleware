@@ -24,11 +24,18 @@ class Potato
 
   # Construct Faces Parts
   parts: (string) ->
-    return {
-      color : @colorMachine.pull(string)
-      eyes  : @eyesMachine.pull(string)
-      nose  : @noseMachine.pull(string)
-      mouth : @mouthMachine.pull(string)
+    [colorIndex, color] = @colorMachine.pull(string)
+    [eyesIndex, eyes] = @eyesMachine.pull(string)
+    [noseIndex, nose] = @noseMachine.pull(string)
+    [mouthIndex, mouth] = @mouthMachine.pull(string)
+    faceKey = "c#{colorIndex}e#{eyesIndex}n#{noseIndex}m#{mouthIndex}"
+    faceParts = {
+      color : color
+      eyes  : eyes
+      nose  : nose
+      mouth : mouth
     }
+
+    return [faceKey, faceParts]
 
 module.exports = new Potato()

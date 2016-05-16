@@ -9,11 +9,12 @@ imageFiles = ImageFiles.allPaths()
 imageSlotMachine = new SlotMachine(imageFiles)
 
 router.param 'id', (req, res, next, id) ->
-  image = imageSlotMachine.pull(id)
+  [index, image] = imageSlotMachine.pull(id)
   req.imagePath = image
   next()
 
 router.get '/:id', (req, res, next) ->
+  res.setHeader('Content-Type', 'image/png')
   res.sendFile(req.imagePath)
 
 # with custom size
