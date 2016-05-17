@@ -36,16 +36,23 @@ router.get '/list', (req, res, next) ->
     .send(response)
 
 router.get '/:id', (req, res, next) ->
-  db.query('select $1 from faces', req.faceKey)
-  .then((cachedImage) ->
-    if cachedImage?
-      console.log('this shit do exist', cachedImage)
-      return res.sendImage(err, cachedImage.image, req, res, next)
+  db.query('select image from faces where face_key=$1', req.faceKey)
+  .then((results) ->
+    if results.length
+      console.log "GOT IT FROM DA CACHE"
+      cachedImage = results[0].image
+      return res.end(cachedImage)
     else
-      imager.combine req.faceParts, (err, stdout) ->
-        console.log('this shit don\'t exist')
-        db.query('insert into faces (face_key, image) values ($1, $2)', req.faceKey, stdout)
-        common.sendImage(err, stdout, req, res, next)
+      chunks = []
+      imager.combine req.faceParts, (err, stream) ->
+        stream.on('data', (chunk) -> chunks.push chunk)
+        stream.on('end', ->
+          data = Buffer.concat(chunks)
+          db.query('insert into faces (face_key, image) values ($1, $2)', [req.faceKey, data])
+          .then -> console.log "image for " + req.faceKey + " cached successfully."
+          .catch -> console.log "Error while trying to cache " + req.faceKey, arguments
+        )
+        common.sendImage(err, stream, req, res, next)
   )
 
 # with custom size
