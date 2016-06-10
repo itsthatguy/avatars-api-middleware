@@ -18,6 +18,7 @@ var del, livereload, runSequence;
 
 if (process.env.NODE_ENV == "development") {
   del         = require('del'),
+  colors      = require('colors'),
   livereload  = require('gulp-livereload'),
   runSequence = require('run-sequence'),
   findPort    = require('find-port');
