@@ -62,4 +62,4 @@ Please read the [contributors' guide](CONTRIBUTING.md)
 
 ## Open-source Contributors
 
-* [missingdink](https://twitter.com/missingdink): Illustrated the current avatars!
+* [missingdink](https://twitter.com/missingdink): Illustrated the very first avatars! [/avatar/](http://api.adorable.io/avatar/hi_mom)
