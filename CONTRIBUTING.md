@@ -12,7 +12,7 @@ process easy and effective for everyone involved.
 
    ```bash
    # Clone your fork of the repo into the current directory
-   git clone https://github.com/<your-username>/adorable-avatars.git
+   git clone https://github.com/<your-username>/avatars-api.git
    # Navigate to the newly cloned directory
    cd avatars-api
    # Assign the original repo to a remote called "upstream"
