@@ -48,8 +48,7 @@ router.get '/face/:eyes/:nose/:mouth/:color/:size?', (req, res, next) ->
 
     faceParts[type] = ImageFiles.pathFor(type, fileName)
 
-  imager.combine faceParts, (err, stdout) ->
+  imager.combine faceParts, req.params.size, (err, stdout) ->
     common.sendImage(err, stdout, req, res, next)
-  , req.params.size
 
 module.exports = router

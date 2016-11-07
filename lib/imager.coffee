@@ -5,7 +5,7 @@ class Imager
   minSize: 40
   maxSize: 400
 
-  combine: (face, callback, size) ->
+  combine: (face, size, callback) ->
     if size
       size = @_parseSize(size)
     else
