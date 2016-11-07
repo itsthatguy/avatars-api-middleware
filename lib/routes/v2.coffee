@@ -22,12 +22,12 @@ router.get '/list', (req, res, next) ->
     .send(response)
 
 router.get '/:id', (req, res, next) ->
-  imager.combine req.faceParts, (err, stdout) ->
+  imager.combine req.faceParts, false, (err, stdout) ->
     common.sendImage(err, stdout, req, res, next)
 
 # with custom size
 router.get '/:size/:id', (req, res, next) ->
-  imager.combine req.faceParts, (err, stdout) ->
+  imager.combine req.faceParts, req.params.size, (err, stdout) ->
     common.sendImage(err, stdout, req, res, next)
   , req.params.size
 
