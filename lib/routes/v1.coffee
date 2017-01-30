@@ -9,7 +9,8 @@ imageFiles = ImageFiles.allPaths()
 imageSlotMachine = new SlotMachine(imageFiles)
 
 router.param 'id', (req, res, next, id) ->
-  image = imageSlotMachine.pull(id)
+  decodedId = decodeURIComponent(id)
+  image = imageSlotMachine.pull(decodedId)
   req.imagePath = image
   next()
 
