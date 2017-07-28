@@ -1,15 +1,12 @@
 {
-  "ext": "*.coffee",
+  "ext": "*.js",
   "watch": [
-    "lib/*.coffee",
-    "lib/**/*.coffee",
-    "app.coffee",
-    "start.js",
+    "src/**/*.js"
+    "index.dev.js",
     "data/*.*"
   ],
   "ignore": [
-    "app/**/*",
-    ".generated/**/*",
+    "public/**/*",
     "postinstall.js"
   ],
   "env": {
