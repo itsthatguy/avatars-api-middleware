@@ -38,7 +38,7 @@ describe('routing', function() {
 
     it('can resize an image', function(done) {
       request.get('/avatar/230/abott').parse(parseImage).end(function(err, res) {
-        im(res.body).size(function(err, size) {
+        im(res.body).size(function(_, size) {
           expect(size).to.eql({ height: 230, width: 230 });
           done();
         });
@@ -53,7 +53,7 @@ describe('routing', function() {
 
     it('can resize an image', function(done) {
       request.get('/avatars/220/abott').parse(parseImage).end(function(err, res) {
-        im(res.body).size(function(err, size) {
+        im(res.body).size(function(_, size) {
           expect(size).to.eql({ height: 220, width: 220 });
           done();
         });

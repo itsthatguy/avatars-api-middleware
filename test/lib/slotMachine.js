@@ -15,11 +15,11 @@ describe('SlotMachine', function() {
 
   describe('slotting an identifier', function() {
     it('pulls an empty string', function() {
-      expect(slotMachine.pull('')).to.be.ok;
+      return expect(slotMachine.pull('')).to.be.ok;
     });
 
     it('pulls a single character string', function() {
-      expect(slotMachine.pull('a')).to.be.ok;
+      return expect(slotMachine.pull('a')).to.be.ok;
     });
 
     it('always pulls a string to the same image', function() {
