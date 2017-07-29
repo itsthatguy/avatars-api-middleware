@@ -1,0 +1,17 @@
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "0.10"
+      },
+      "useBuiltIns": true
+    }]
+  ],
+  "plugins": [
+    "transform-regenerator",
+    "transform-object-rest-spread"
+  ],
+  "ignore": [
+    "node_modules/",
+  ]
+}
