@@ -1,6 +1,6 @@
 import ua from 'universal-analytics';
 
-const tracker = (req, res, next) => {
+const tracker = function (req, res, next) {
   const visitor = ua('UA-49535937-3');
 
   const eventParams = {
@@ -14,4 +14,4 @@ const tracker = (req, res, next) => {
   next();
 };
 
-export default tracker;
+module.exports = tracker;

@@ -21,7 +21,8 @@ app.get('/', function(req, res) {
 });
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(require('./tracker'));
+  const tracker = require('./lib/tracker');
+  app.use(tracker);
 }
 
 import routesV1 from './routes/v1';
