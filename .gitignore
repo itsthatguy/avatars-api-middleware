@@ -2,3 +2,4 @@ node_modules/
 bower_components/
 .generated/
 .env
+newrelic_agent.log
