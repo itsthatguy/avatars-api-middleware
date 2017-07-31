@@ -22,6 +22,7 @@
     "babel-watch": "^2.0.6",
     "colors": "^0.6.2",
     "express": "^4.8.0",
+    "express-cluster": "0.0.4",
     "find-port": "^1.0.0",
     "gm": "^1.16.0",
     "newrelic": "^1.27.2",
