@@ -5,6 +5,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 import express from 'express';
+import cluster from 'express-cluster';
 import path from 'path';
 import favicon from 'serve-favicon';
 import findPort from 'find-port';
@@ -14,6 +15,8 @@ import colors from 'colors';
 const app = express();
 const basePath = path.join(__dirname, '..');
 const faviconPath = path.join(basePath, 'src', 'favicon.ico');
+
+const webConcurrency = process.env.WEB_CONCURRENCY || 1;
 
 app.set('trust proxy', true);
 
@@ -42,12 +45,15 @@ const listen = (port) => {
 };
 
 const port = process.env.PORT || 3002;
-if (port > 3002) {
-  listen(port);
-} else {
-  findPort(port, port + 100, function(ports) {
-    return listen(ports[0]);
-  });
-}
+
+cluster(function() {
+  if (port > 3002) {
+    listen(port);
+  } else {
+    findPort(port, port + 100, function(ports) {
+      return listen(ports[0]);
+    });
+  }
+}, { count: webConcurrency });
 
 export default app;
