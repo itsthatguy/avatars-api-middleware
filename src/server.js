@@ -15,6 +15,8 @@ const app = express();
 const basePath = path.join(__dirname, '..');
 const faviconPath = path.join(basePath, 'src', 'favicon.ico');
 
+app.set('trust proxy', true);
+
 app.use(favicon(faviconPath));
 app.get('/', function(req, res) {
   return res.redirect('http://avatars.adorable.io');
