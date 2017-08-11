@@ -32,6 +32,11 @@ if (process.env.NODE_ENV === 'production') {
   app.use(tracker);
 }
 
+app.use(function(req, res, next) {
+  res.set('Cache-Control', 'public, max-age=31557600');
+
+  next();
+});
 import routesV1 from './routes/v1';
 import routesV2 from './routes/v2';
 
