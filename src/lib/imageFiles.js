@@ -8,8 +8,8 @@ export const dirFor = (type, imageDir) => {
   else return imageDir;
 };
 
-export const allNames = (type) => {
-  return fs.readdirSync(dirFor(type)).filter(function(imageFileName) {
+export const allNames = (type, imageDir) => {
+  return fs.readdirSync(dirFor(type, imageDir)).filter(function(imageFileName) {
     return imageFileName.match(/\.png/);
   }).map(function(imageFileName) {
     return imageFileName.replace(/\.png/, '');
@@ -19,7 +19,7 @@ export const allNames = (type) => {
 export const allPaths = (type, imageDir = DEFAULT_IMAGE_DIR) => {
   var dir;
   dir = dirFor(type, imageDir);
-  return allNames(type).map(function(name) {
+  return allNames(type, imageDir).map(function(name) {
     return path.join(dir, name + '.png');
   });
 };
