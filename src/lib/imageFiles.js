@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 
-const imageDir = path.join(__dirname, '..', 'img');
+const DEFAULT_IMAGE_DIR = path.join(__dirname, '..', 'img');
 
-export const dirFor = (type) => {
+export const dirFor = (type, imageDir) => {
   if (type) return path.join(imageDir, type);
   else return imageDir;
 };
@@ -16,9 +16,9 @@ export const allNames = (type) => {
   });
 };
 
-export const allPaths = (type) => {
+export const allPaths = (type, imageDir = DEFAULT_IMAGE_DIR) => {
   var dir;
-  dir = dirFor(type);
+  dir = dirFor(type, imageDir);
   return allNames(type).map(function(name) {
     return path.join(dir, name + '.png');
   });
