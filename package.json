@@ -1,6 +1,6 @@
 {
   "name": "adorable-avatars",
-  "version": "0.0.3",
+  "version": "0.1.1",
   "description": "",
   "engines": {
     "node": "7.10.x"
@@ -8,33 +8,31 @@
   "scripts": {
     "test": "node_modules/.bin/mocha",
     "start": "concurrently --kill-others --prefix=name --names=server,eslint --prefix-colors=green,magenta \"babel-watch --watch src index.dev.js\" \"esw src/ --changed --watch\"",
-    "start:prod": "node_modules/.bin/babel-node src/server.js"
+    "start:prod": "node_modules/.bin/babel-node src/server.js",
+    "prepare": "node_modules/.bin/babel src/ --out-dir=dist/ --copy-files"
   },
   "author": "",
   "license": "MIT",
+  "main": "dist/routes/avatars.js",
   "dependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-jest": "^19.0.0",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-plugin-transform-regenerator": "^6.24.1",
-    "babel-preset-env": "^1.4.0",
-    "babel-register": "^6.24.1",
-    "babel-watch": "^2.0.6",
     "colors": "^0.6.2",
     "express": "^4.8.0",
-    "express-cluster": "0.0.4",
     "find-port": "^1.0.0",
     "gm": "^1.16.0",
-    "newrelic": "^1.27.2",
     "serve-favicon": "^2.0.1",
-    "underscore": "^1.6.0",
-    "universal-analytics": "^0.3.4"
+    "underscore": "^1.6.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/adorableio/adorable-avatars.git"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-regenerator": "^6.24.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.4.0",
+    "babel-watch": "^2.0.6",
     "chai": "~1.9.1",
     "concurrently": "^3.5.0",
     "eslint": "^3.19.0",

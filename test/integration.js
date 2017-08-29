@@ -25,27 +25,6 @@ describe('routing', function() {
     request = supertest(webserver);
   });
 
-  describe('root', function() {
-    it('redirects to the one-pager', function(done) {
-      request.get('/').expect(302).expect('location', 'http://avatars.adorable.io').end(done);
-    });
-  });
-
-  describe('v1 avatar request', function() {
-    it('responds with an image', function(done) {
-      request.get('/avatar/abott').expect('Content-Type', /image/).end(done);
-    });
-
-    it('can resize an image', function(done) {
-      request.get('/avatar/230/abott').parse(parseImage).end(function(err, res) {
-        im(res.body).size(function(_, size) {
-          expect(size).to.eql({ height: 230, width: 230 });
-          done();
-        });
-      });
-    });
-  });
-
   describe('v2 avatar request', function() {
     it('responds with an image', function(done) {
       request.get('/avatars/abott').expect('Content-Type', /image/).end(done);
