@@ -6,10 +6,10 @@
     "node": "9.4.x"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha",
+    "test": "mocha",
     "start": "concurrently --kill-others --prefix=name --names=server,eslint --prefix-colors=green,magenta \"babel-watch --watch src index.dev.js\" \"esw src/ --changed --watch\"",
-    "start:prod": "node_modules/.bin/babel-node src/server.js",
-    "prepare": "node_modules/.bin/babel src/ --out-dir=dist/ --copy-files"
+    "start:prod": "babel-node src/server.js",
+    "prepare": "babel src/ --out-dir=dist/ --copy-files"
   },
   "author": "",
   "license": "MIT",
