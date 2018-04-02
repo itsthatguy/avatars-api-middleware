@@ -7,8 +7,9 @@
   },
   "scripts": {
     "test": "mocha --exit",
-    "start": "concurrently --kill-others --prefix=name --names=server,eslint --prefix-colors=green,magenta \"babel-watch --watch src index.dev.js\" \"esw src/ --changed --watch\"",
-    "start:prod": "babel-node src/server.js",
+    "dev": "concurrently --kill-others --prefix=name --names=server,eslint --prefix-colors=green,magenta \"babel-watch --watch src index.dev.js\" \"esw src/ --changed --watch\"",
+    "start": "babel-node src/server.js",
+    "start:prod": "node dist/server.js",
     "prepare": "babel src/ --out-dir=dist/ --copy-files"
   },
   "author": "",
