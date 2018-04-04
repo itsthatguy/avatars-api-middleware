@@ -57,10 +57,10 @@ Then, there are several npm scripts that will be useful:
 
 ```bash
 # run the unit tests
-npm run test
+npm test
 
 # run a dev server
-npm run start
+npm start
 
 # run both a dev server and eslint
 npm run dev
