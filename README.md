@@ -1,5 +1,5 @@
 # adorable-avatars
-[![Build Status](https://travis-ci.org/adorableio/avatars-api.svg?branch=master)](https://travis-ci.org/adorableio/avatars-api?branch=master)
+[![Build Status](https://travis-ci.org/adorableio/avatars-api-middleware.svg)](https://travis-ci.org/adorableio/avatars-api-middleware)
 
 ## What is it?
 This repository contains the [express middleware](https://expressjs.com/en/guide/using-middleware.html#middleware.router) that can be used to host your own avatars service!
@@ -37,9 +37,7 @@ Assuming your server lives at `myserver.com`, and you've configured the middlewa
     * returns an avatar for the provided `id` at the specified `size`
     * size cannot exceed 400px
 * `myserver.com/myAvatars/face/:eyes/:nose/:mouth/:color/:size?`
-    * Allows you to generate a custom avatar from the specified parts and color
-    * e.g. `myserver.com/myAvatars/face/eyes1/nose2/mouth4/DEADBF`
-    * You can also set the size of your custom avatar
+    * Allows you to generate a custom avatar from the specified parts and color, and size
     * e.g. `myserver.com/myAvatars/face/eyes1/nose2/mouth4/DEADBF/300`
 * `myserver.com/myAvatars/list`
     * returns JSON of all valid parts for the custom endpoint above
