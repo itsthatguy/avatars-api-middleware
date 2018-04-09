@@ -31,7 +31,7 @@ router.get('/list', function(req, res) {
 });
 
 router.get('/:id', function(req, res, next) {
-  return combine(req.faceParts,false, function(err, stdout) {
+  return combine(req.faceParts, false, function(err, stdout) {
     return common.sendImage(err, stdout, req, res, next);
   });
 });
