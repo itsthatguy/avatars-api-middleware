@@ -31,7 +31,7 @@ router.get('/list', function(req, res) {
 });
 
 router.get('/:id', function(req, res, next) {
-  return combine(req.faceParts, function(err, stdout) {
+  return combine(req.faceParts,false, function(err, stdout) {
     return common.sendImage(err, stdout, req, res, next);
   });
 });
@@ -42,7 +42,7 @@ router.get('/:size/:id', function(req, res, next) {
   });
 });
 
-router.get('/face/:eyes/:nose/:mouth/:color', function(req, res, next) {
+router.get('/face/:eyes/:nose/:mouth/:color/:size?', function(req, res, next) {
   let faceParts = { color: '#' + req.params.color };
 
   partTypes.forEach(function(type) {
@@ -61,7 +61,7 @@ router.get('/face/:eyes/:nose/:mouth/:color', function(req, res, next) {
     faceParts[type] = pathFor(type, fileName);
   });
 
-  return combine(faceParts, function(err, stdout) {
+  return combine(faceParts, req.params.size, function(err, stdout) {
     return common.sendImage(err, stdout, req, res, next);
   });
 });
