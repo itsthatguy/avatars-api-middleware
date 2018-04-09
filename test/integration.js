@@ -45,6 +45,18 @@ describe('routing', function() {
       .expect('Content-Type', /image/)
       .end(done);
     });
+
+    it('can manually compose an image with a custom size', function(done) {
+      request.get('/avatars/face/eyes1/nose4/mouth11/bbb/50')
+      .expect(200)
+      .expect('Content-Type', /image/)
+      .parse(parseImage).end(function(err, res) {
+        im(res.body).size(function(_, size) {
+          expect(size).to.eql({ height: 50, width: 50 });
+          done();
+        });
+      });
+    });
   });
 
   describe('v2 avatar list requests', function() {

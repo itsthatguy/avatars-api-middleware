@@ -22,9 +22,8 @@ const _parseSize = (size) => {
 };
 
 export const combine = (face, size, callback) => {
-  if (callback) { size = _parseSize(size); }
+  if (size) { size = _parseSize(size); }
   else {
-    callback = size;
     size = { width: maxSize, height: maxSize };
   }
 
