@@ -1,5 +1,5 @@
 # adorable-avatars
-[![Build Status](https://travis-ci.org/adorableio/avatars-api.svg?branch=master)](https://travis-ci.org/adorableio/avatars-api?branch=master)
+[![Build Status](https://travis-ci.org/adorableio/avatars-api-middleware.svg)](https://travis-ci.org/adorableio/avatars-api-middleware)
 
 ## What is it?
 This repository contains the [express middleware](https://expressjs.com/en/guide/using-middleware.html#middleware.router) that can be used to host your own avatars service!
