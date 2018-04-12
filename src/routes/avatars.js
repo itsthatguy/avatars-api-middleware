@@ -31,13 +31,7 @@ router.get('/list', function(req, res) {
   return res.set('Content-Type', 'application/json').send(response);
 });
 
-router.get('/:id', function(req, res, next) {
-  return combine(req.faceParts, false, function(err, stdout) {
-    return common.sendImage(err, stdout, req, res, next);
-  });
-});
-
-router.get('/:size/:id', function(req, res, next) {
+router.get('/:size?/:id', function(req, res, next) {
   return combine(req.faceParts, req.params.size, function(err, stdout) {
     return common.sendImage(err, stdout, req, res, next);
   });
