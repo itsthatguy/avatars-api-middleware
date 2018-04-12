@@ -72,4 +72,28 @@ describe('routing', function() {
       });
     });
   });
+
+  describe('v2 avatar random requests', function() {
+
+    it('can randomly generate a new avatar', function(done) {
+      request.get('/avatars/random')
+      .expect(200)
+      .expect('Content-Type', /image/)
+      .end(done);
+    });
+
+    it('can randomly generate a new avatar with a custom size', function(done) {
+      request.get('/avatars/50/random')
+      .expect(200)
+      .expect('Content-Type', /image/)
+      .parse(parseImage).end(function(err, res) {
+        im(res.body).size(function(_, size) {
+          expect(size).to.eql({ height: 50, width: 50 });
+          done();
+        });
+      });
+    });
+
+  });
+
 });
