@@ -23,7 +23,8 @@
     "find-port": "^1.0.0",
     "gm": "^1.16.0",
     "serve-favicon": "^2.0.1",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "uuid": "^3.2.1"
   },
   "repository": {
     "type": "git",
