@@ -41,6 +41,10 @@ Assuming your server lives at `myserver.com`, and you've configured the middlewa
     * e.g. `myserver.com/myAvatars/face/eyes1/nose2/mouth4/DEADBF/300`
 * `myserver.com/myAvatars/list`
     * returns JSON of all valid parts for the custom endpoint above
+  * `myserver.com/myAvatars/:size?/random`
+      * returns a random avatar, different each time
+      * e.g. `myserver.com/myAvatars/300/random`
+
 
 ## Development
 If you're developing locally, you'll first need to bootstrap (assumes [nvm](https://github.com/creationix/nvm)):
