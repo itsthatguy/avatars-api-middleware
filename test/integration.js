@@ -74,26 +74,37 @@ describe('routing', function() {
   });
 
   describe('v2 avatar random requests', function() {
-
     it('can randomly generate a new avatar', function(done) {
-      request.get('/avatars/random')
-      .expect(200)
-      .expect('Content-Type', /image/)
-      .end(done);
-    });
+      const getRandom = () => request
+          .get('/avatars/random')
+          .expect(200)
+          .expect('Content-Type', /image/)
+          .parse(parseImage);
 
-    it('can randomly generate a new avatar with a custom size', function(done) {
-      request.get('/avatars/50/random')
-      .expect(200)
-      .expect('Content-Type', /image/)
-      .parse(parseImage).end(function(err, res) {
-        im(res.body).size(function(_, size) {
-          expect(size).to.eql({ height: 50, width: 50 });
-          done();
+      getRandom().end((_, r1) => {
+        getRandom().end((_, r2) => {
+          im(r1.body).identify('%#', (_, id1) => {
+            im(r2.body).identify('%#', (_, id2) => {
+              expect(id1).not.to.equal(id2);
+              done();
+            });
+          });
         });
       });
     });
 
+    it('supports a custom size parameter', function(done) {
+      request
+        .get('/avatars/50/random')
+        .expect(200)
+        .expect('Content-Type', /image/)
+        .parse(parseImage)
+        .end(function(err, res) {
+          im(res.body).size(function(_, size) {
+            expect(size).to.eql({ height: 50, width: 50 });
+            done();
+          });
+        });
+    });
   });
-
 });
