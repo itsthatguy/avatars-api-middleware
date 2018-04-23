@@ -1,10 +1,7 @@
 import Router from 'express';
-import uuid from 'uuid'
+import uuid from 'uuid';
 
-import {
-  allNames,
-  pathFor,
-} from '../lib/imageFiles';
+import { allNames, pathFor } from '../lib/imageFiles';
 import common from './common';
 import { combine } from '../lib/imager';
 import potato from '../lib/potato';
