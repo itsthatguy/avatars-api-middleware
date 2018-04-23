@@ -31,12 +31,6 @@ router.get('/list', function(req, res) {
   return res.set('Content-Type', 'application/json').send(response);
 });
 
-router.get('/:size?/:id', function(req, res, next) {
-  return combine(req.faceParts, req.params.size, function(err, stdout) {
-    return common.sendImage(err, stdout, req, res, next);
-  });
-});
-
 router.get('/:size?/random', function(req, res) {
   var faceParts;
   faceParts = potato.parts(uuid.v4());
@@ -44,6 +38,12 @@ router.get('/:size?/random', function(req, res) {
 
   return combine(faceParts, req.params.size, function(err, stdout) {
     return common.sendImage(err, stdout, req, res);
+  });
+});
+
+router.get('/:size?/:id', function(req, res, next) {
+  return combine(req.faceParts, req.params.size, function(err, stdout) {
+    return common.sendImage(err, stdout, req, res, next);
   });
 });
 
