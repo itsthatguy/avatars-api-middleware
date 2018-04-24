@@ -17,10 +17,10 @@ Then, use the router middleware within your application:
 
 ```js
 // your_server.js
-var express = require('express');
-var avatarsMiddleware = require('adorable-avatars');
+import express from 'express';
+import avatarsMiddleware from 'adorable-avatars';
 
-var myApp = express();
+const myApp = express();
 myApp.use('/myAvatars', avatarsMiddleware);
 ```
 
