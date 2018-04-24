@@ -25,27 +25,6 @@ describe('routing', function() {
     request = supertest(webserver);
   });
 
-  describe('root', function() {
-    it('redirects to the one-pager', function(done) {
-      request.get('/').expect(302).expect('location', 'http://avatars.adorable.io').end(done);
-    });
-  });
-
-  describe('v1 avatar request', function() {
-    it('responds with an image', function(done) {
-      request.get('/avatar/abott').expect('Content-Type', /image/).end(done);
-    });
-
-    it('can resize an image', function(done) {
-      request.get('/avatar/230/abott').parse(parseImage).end(function(err, res) {
-        im(res.body).size(function(_, size) {
-          expect(size).to.eql({ height: 230, width: 230 });
-          done();
-        });
-      });
-    });
-  });
-
   describe('v2 avatar request', function() {
     it('responds with an image', function(done) {
       request.get('/avatars/abott').expect('Content-Type', /image/).end(done);
@@ -66,6 +45,18 @@ describe('routing', function() {
       .expect('Content-Type', /image/)
       .end(done);
     });
+
+    it('can manually compose an image with a custom size', function(done) {
+      request.get('/avatars/face/eyes1/nose4/mouth11/bbb/50')
+      .expect(200)
+      .expect('Content-Type', /image/)
+      .parse(parseImage).end(function(err, res) {
+        im(res.body).size(function(_, size) {
+          expect(size).to.eql({ height: 50, width: 50 });
+          done();
+        });
+      });
+    });
   });
 
   describe('v2 avatar list requests', function() {
@@ -79,6 +70,41 @@ describe('routing', function() {
         expect(faceParts).to.have.keys('eyes', 'mouth', 'nose');
         done();
       });
+    });
+  });
+
+  describe('v2 avatar random requests', function() {
+    it('can randomly generate a new avatar', function(done) {
+      const getRandom = () => request
+          .get('/avatars/random')
+          .expect(200)
+          .expect('Content-Type', /image/)
+          .parse(parseImage);
+
+      getRandom().end((_, r1) => {
+        getRandom().end((_, r2) => {
+          im(r1.body).identify('%#', (_, id1) => {
+            im(r2.body).identify('%#', (_, id2) => {
+              expect(id1).not.to.equal(id2);
+              done();
+            });
+          });
+        });
+      });
+    });
+
+    it('supports a custom size parameter', function(done) {
+      request
+        .get('/avatars/50/random')
+        .expect(200)
+        .expect('Content-Type', /image/)
+        .parse(parseImage)
+        .end(function(err, res) {
+          im(res.body).size(function(_, size) {
+            expect(size).to.eql({ height: 50, width: 50 });
+            done();
+          });
+        });
     });
   });
 });

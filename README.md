@@ -1,60 +1,80 @@
 # adorable-avatars
-[![Build Status](https://travis-ci.org/adorableio/avatars-api.svg?branch=master)](https://travis-ci.org/adorableio/avatars-api?branch=master)
+[![Build Status](https://travis-ci.org/adorableio/avatars-api-middleware.svg)](https://travis-ci.org/adorableio/avatars-api-middleware)
 
 ## What is it?
+This repository contains the [express middleware](https://expressjs.com/en/guide/using-middleware.html#middleware.router) that can be used to host your own avatars service!
 
-#### What are avatars?
-Avatars are earthly creatures that serve as proxies for gods.
-In the web world, they just represent people, and they're usually small images. 
-
-Some use photographs of themselves as their avatar. Some people use caricatures of themselves. Others pick their favorite superhero. The sky's the limit.
-
-#### What's an avatar _service_?
-It answers the question "What is this user's avatar?"
-In this way, it provides a consistent representation of that user.
-Across _all_ websites that use that service. Pretty cool, right?
-
-But what if you haven't uploaded your image to that service?
-Then you get a really boring, gray silhouette.
-
-#### So what's the Adorable Avatars service?
-It's an interface to a better universe. With a simple route, your face will be filled with consistently-linked avatar glory!
-
-Huh? _Consistently-linked avatar glory?_
-
-Whenever you make a request to Adorable Avatars, using an identifier like "abott@adorable.io," we give you an image for you to use on your page.
-Most importantly, it's the same image! Every. Single. Time.
-
-## Why would I use it?
-What if you're developing a feature like member lists or profiles, but you don't have any images to use?
-Just give us your user's identifier and we'll give you their avatar image!
-That's it.
-
-Already have avatars implemented in your application?
-Use Adorable Avatars as a fallback and get rid of those gray silhouettes!
+Check out [our website](http://avatars.adorable.io/) for more info on (and an interactive demo of) what this service does.
 
 ## How do I use it?
-Here's a quick example in Haml:
-```haml
-.user
-  %img.avatar(src="http://api.adorable.io/avatar/#{user.name}")
+First, you'll need to install the package:
+
+```bash
+npm install adorable-avatars --save
 ```
 
-### Requesting an Avatar
-The most basic request is of the following form:
+Then, use the router middleware within your application:
 
-    http://api.adorable.io/avatar/<identifier>
+```js
+// your_server.js
+var express = require('express');
+var avatarsMiddleware = require('adorable-avatars');
 
-Where `identifier` is the unique identifier for your user (name, email, md5, etc.).
-This will serve the image in its default size.
+var myApp = express();
+myApp.use('/myAvatars', avatarsMiddleware);
+```
 
-To request an avatar with specific size, use the following form:
+That's it! Your server now includes the avatars endpoints!
 
-    http://api.adorable.io/avatar/<size>/<identifier>
+### Endpoints
+Assuming your server lives at `myserver.com`, and you've configured the middleware as above, you now have the following endpoints:
 
-So, if you want your friend Bob's avatar, with a height and width of 200px, the URL would be:
+* `myserver.com/myAvatars/:id`
+    * returns an avatar for the provided `id`.
+    * `id` can be anything (email, username, md5 hash, as long as it's a valid URI)
+    * defaults to 400px
+* `myserver.com/myAvatars/:size/:id`
+    * returns an avatar for the provided `id` at the specified `size`
+    * size cannot exceed 400px
+* `myserver.com/myAvatars/face/:eyes/:nose/:mouth/:color/:size?`
+    * Allows you to generate a custom avatar from the specified parts and color, and size
+    * e.g. `myserver.com/myAvatars/face/eyes1/nose2/mouth4/DEADBF/300`
+* `myserver.com/myAvatars/list`
+    * returns JSON of all valid parts for the custom endpoint above
+  * `myserver.com/myAvatars/:size?/random`
+      * returns a random avatar, different each time
+      * e.g. `myserver.com/myAvatars/300/random`
 
-    http://api.adorable.io/avatar/200/bob
+
+## Development
+If you're developing locally, you'll first need to bootstrap (assumes [nvm](https://github.com/creationix/nvm)):
+
+```bash
+# use correct node version
+nvm use
+
+# install dependencies
+npm install
+```
+
+Then, there are several npm scripts that will be useful:
+
+```bash
+# run the unit tests
+npm test
+
+# run a dev server
+npm start
+
+# run both a dev server and eslint
+npm run dev
+
+# compile the application
+npm run build
+
+# run the compiled server
+npm run start:prod
+```
 
 ## Contributing
 
@@ -62,4 +82,4 @@ Please read the [contributors' guide](CONTRIBUTING.md)
 
 ## Open-source Contributors
 
-* [missingdink](https://twitter.com/missingdink): Illustrated the very first avatars! [/avatar/](http://api.adorable.io/avatar/hi_mom)
+* [missingdink](https://twitter.com/missingdink): Illustrated the very first avatars! [Check them out!](http://api.adorable.io/avatar/hi_mom)
