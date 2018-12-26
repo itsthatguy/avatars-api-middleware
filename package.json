@@ -18,8 +18,9 @@
   "license": "MIT",
   "main": "dist/routes/avatars.js",
   "dependencies": {
-    "gm": "^1.16.0",
+    "cors": "^2.8.5",
     "express": "^4.8.0",
+    "gm": "^1.16.0",
     "uuid": "^3.2.1"
   },
   "repository": {

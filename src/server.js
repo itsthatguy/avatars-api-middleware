@@ -1,10 +1,13 @@
 import express from 'express';
+import cors from 'cors';
 import path from 'path';
 import favicon from 'serve-favicon';
 import findPort from 'find-port';
 import 'colors';
 
 const app = express();
+app.use(cors());
+
 const basePath = path.join(__dirname, '..');
 const faviconPath = path.join(basePath, 'src', 'favicon.ico');
 
