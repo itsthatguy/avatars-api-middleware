@@ -43,7 +43,7 @@
     "find-port": "^1.0.0",
     "mocha": "^5.0.5",
     "serve-favicon": "^2.0.1",
-    "supertest": "~0.13.0"
+    "supertest": "^3.3.0"
   },
   "eslintConfig": {
     "extends": "eslint-config-adorable"
