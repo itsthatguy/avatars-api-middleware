@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-regenerator": "^6.24.1",
     "babel-polyfill": "^6.23.0",
@@ -36,10 +37,10 @@
     "chai": "~1.9.1",
     "colors": "^0.6.2",
     "concurrently": "^3.5.0",
-    "find-port": "^1.0.0",
     "eslint": "^3.19.0",
     "eslint-config-adorable": "^0.0.6",
     "eslint-watch": "^3.1.2",
+    "find-port": "^1.0.0",
     "mocha": "^5.0.5",
     "serve-favicon": "^2.0.1",
     "supertest": "~0.13.0"
