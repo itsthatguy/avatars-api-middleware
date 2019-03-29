@@ -8,9 +8,9 @@
   "scripts": {
     "test": "mocha --exit",
     "build": "babel src/ --out-dir=dist/ --copy-files",
-    "dev": "concurrently --kill-others --prefix=name --names=server,eslint --prefix-colors=green,magenta \"babel-watch --watch src src/server.js\" \"esw src/ --changed --watch\"",
-    "start": "babel-node src/server.js",
-    "start:prod": "node dist/server.js",
+    "dev": "concurrently --kill-others --prefix=name --names=server,eslint --prefix-colors=green,magenta \"npm run start:server\" \"npm run start:lint\"",
+    "dev:server": "babel-watch --watch src test/server.js",
+    "dev:lint": "esw src/ --changed --watch",
     "heroku-postbuild": "npm run build",
     "prepublishOnly": "npm run build"
   },

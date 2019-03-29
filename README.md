@@ -71,17 +71,17 @@ Then, there are several npm scripts that will be useful:
 # run the unit tests
 npm test
 
-# run a dev server
-npm start
-
 # run both a dev server and eslint
 npm run dev
 
+# run a dev server
+npm run dev:server
+
+# run eslint
+npm run dev:server
+
 # compile the application
 npm run build
-
-# run the compiled server
-npm run start:prod
 ```
 
 ## Contributing
