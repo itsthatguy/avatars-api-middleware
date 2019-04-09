@@ -8,7 +8,7 @@
   "scripts": {
     "test": "mocha --exit",
     "build": "babel src/ --out-dir=dist/ --copy-files",
-    "dev": "concurrently --kill-others --prefix=name --names=server,eslint --prefix-colors=green,magenta \"npm run start:server\" \"npm run start:lint\"",
+    "dev": "concurrently --kill-others --prefix=name --names=server,eslint --prefix-colors=green,magenta \"npm run dev:server\" \"npm run dev:lint\"",
     "dev:server": "babel-watch --watch src test/server.js",
     "dev:lint": "esw src/ --changed --watch",
     "heroku-postbuild": "npm run build",

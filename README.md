@@ -78,7 +78,7 @@ npm run dev
 npm run dev:server
 
 # run eslint
-npm run dev:server
+npm run dev:lint
 
 # compile the application
 npm run build
