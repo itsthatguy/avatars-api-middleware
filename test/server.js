@@ -10,7 +10,7 @@ const faviconPath = path.join(basePath, 'src', 'favicon.ico');
 
 app.use(favicon(faviconPath));
 
-import avatarsRoutes from './routes/avatars';
+import avatarsRoutes from '../src/routes/avatars';
 
 app.use('/avatars', avatarsRoutes);
 

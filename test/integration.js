@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import { expect } from 'chai';
 import { subClass } from 'gm';
-import webserver from '../src/server';
+import webserver from './server';
 
 const im = subClass({ imageMagick: true });
 
