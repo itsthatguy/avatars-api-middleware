@@ -1,7 +1,11 @@
 import { sum } from './hashingFunctions';
 
-class SlotMachine {
-  constructor(slots, hashingFn) {
+class SlotMachine<T> {
+  private slots: T[];
+  private numSlots: number;
+  private hashingFn: (items: number[]) => number;
+
+  constructor(slots: T[], hashingFn?) {
     this.slots = slots;
     this.numSlots = this.slots.length;
     this.hashingFn = hashingFn || sum;

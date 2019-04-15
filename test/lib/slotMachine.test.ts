@@ -7,7 +7,7 @@ describe('SlotMachine', function() {
 
   beforeEach(function() {
     files = Array(5)
-    .fill()
+    .fill('')
     .map((_, i) => 'file' + (i + 1));
 
     slotMachine = new SlotMachine(files);
@@ -24,7 +24,7 @@ describe('SlotMachine', function() {
 
     it('always pulls a string to the same image', function() {
       Array(100)
-      .fill()
+      .fill('')
       .forEach(() => {
         const image = slotMachine.pull('foo');
         expect(image).to.equal('file3');
@@ -33,7 +33,7 @@ describe('SlotMachine', function() {
 
     it('always pulls within the given set of files', function() {
       Array(100)
-      .fill()
+      .fill('')
       .forEach(() => {
         const randomString = Math.random().toString(30).substring(2);
         const image = slotMachine.pull(randomString);
@@ -52,7 +52,7 @@ describe('SlotMachine', function() {
 
     it('pulls a string to the same image', function() {
       Array(100)
-      .fill()
+      .fill('')
       .forEach(() => {
         const image = customSlotMachine.pull('string');
         expect(image).to.equal('file2');

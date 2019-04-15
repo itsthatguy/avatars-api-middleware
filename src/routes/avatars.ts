@@ -8,12 +8,12 @@ import potato from '../lib/potato';
 
 const partTypes = ['eyes', 'nose', 'mouth'];
 
-// eslint-disable-next-line new-cap
 const router = Router();
 
 router.param('id', function(req, res, next, id) {
   var faceParts;
   faceParts = potato.parts(id);
+  //@ts-ignore
   req.faceParts = faceParts;
   return next();
 });
@@ -31,6 +31,7 @@ router.get('/list', function(req, res) {
 router.get('/:size?/random', function(req, res) {
   var faceParts;
   faceParts = potato.parts(uuid.v4());
+  //@ts-ignore
   req.faceParts = faceParts;
 
   return combine(faceParts, req.params.size, function(err, stdout) {
@@ -39,6 +40,7 @@ router.get('/:size?/random', function(req, res) {
 });
 
 router.get('/:size?/:id', function(req, res, next) {
+  //@ts-ignore
   return combine(req.faceParts, req.params.size, function(err, stdout) {
     return common.sendImage(err, stdout, req, res, next);
   });

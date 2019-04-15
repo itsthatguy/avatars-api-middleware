@@ -27,7 +27,7 @@ export const combine = (face, size, callback) => {
     size = { width: maxSize, height: maxSize };
   }
 
-  imageMagick()
+  imageMagick('')
   .quality(0)
   .in(face.eyes)
   .in(face.nose)
