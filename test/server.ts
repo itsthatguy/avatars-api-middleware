@@ -7,7 +7,7 @@ import avatarsRoutes from '../src/routes/avatars';
 const app = express();
 const port = Number(process.env.PORT) || 3002;
 
-const faviconPath = path.join(__dirname, '..', 'src', 'favicon.ico');
+const faviconPath = path.join(__dirname, 'favicon.ico');
 app.use(favicon(faviconPath));
 
 app.use('/avatars', avatarsRoutes);
