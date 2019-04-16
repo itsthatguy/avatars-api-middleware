@@ -10,7 +10,7 @@
     "build": "babel src/ --out-dir=dist/ --copy-files",
     "dev": "concurrently --kill-others --prefix=name --names=server,eslint --prefix-colors=green,magenta \"npm run dev:server\" \"npm run dev:lint\"",
     "dev:server": "onchange -i -k 'src/**/*.ts' -- ts-node test/server.ts",
-    "dev:lint": "esw src/ --changed --watch",
+    "dev:lint": "onchange -i -k 'src/**/*.ts' -- tslint 'src/**/*.ts'",
     "prepublishOnly": "npm run build"
   },
   "author": "",
