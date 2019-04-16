@@ -10,12 +10,12 @@ const _multiplication = (a, b) => {
   return a * b;
 };
 
-export const sum = (array) => {
+export const sum = array => {
   return array.reduce(_addition, 0);
 };
 
-export const sumAndDiff = (array) => {
-  return array.reduce(function(prev, curr, index) {
+export const sumAndDiff = array => {
+  return array.reduce((prev, curr, index) => {
     if (index % 2 === 0) {
       return _addition(prev, curr);
     } else {
@@ -24,6 +24,6 @@ export const sumAndDiff = (array) => {
   }, 0);
 };
 
-export const product = (array) => {
+export const product = array => {
   return array.reduce(_multiplication, 1);
 };

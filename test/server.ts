@@ -13,7 +13,7 @@ app.use(favicon(faviconPath));
 app.use('/avatars', avatarsRoutes);
 
 app.listen(port, () =>
-  console.log(`[Adorable Avatars] Running at: http://localhost:${port}`)
+  console.log(`[Adorable Avatars] Running at: http://localhost:${port}`),
 );
 
 export default app;

@@ -1,70 +1,74 @@
-const expect = require('chai').expect;
+import { expect } from 'chai';
+
 import SlotMachine from '../../src/lib/slotMachine';
 
-describe('SlotMachine', function() {
+describe('SlotMachine', () => {
   let slotMachine;
   let files;
 
-  beforeEach(function() {
+  beforeEach(() => {
     files = Array(5)
-    .fill('')
-    .map((_, i) => 'file' + (i + 1));
+      .fill('')
+      .map((_, i) => 'file' + (i + 1));
 
     slotMachine = new SlotMachine(files);
   });
 
-  describe('slotting an identifier', function() {
-    it('pulls an empty string', function() {
-      return expect(slotMachine.pull('')).to.be.ok;
-    });
+  describe('slotting an identifier', () => {
+    it('pulls an empty string', () => expect(slotMachine.pull('')).to.be.ok);
 
-    it('pulls a single character string', function() {
-      return expect(slotMachine.pull('a')).to.be.ok;
-    });
+    it('pulls a single character string', () =>
+      expect(slotMachine.pull('a')).to.be.ok);
 
-    it('always pulls a string to the same image', function() {
+    it('always pulls a string to the same image', () => {
       Array(100)
-      .fill('')
-      .forEach(() => {
-        const image = slotMachine.pull('foo');
-        expect(image).to.equal('file3');
-      });
+        .fill('')
+        .forEach(() => {
+          const image = slotMachine.pull('foo');
+          expect(image).to.equal('file3');
+        });
     });
 
-    it('always pulls within the given set of files', function() {
+    it('always pulls within the given set of files', () => {
       Array(100)
-      .fill('')
-      .forEach(() => {
-        const randomString = Math.random().toString(30).substring(2);
-        const image = slotMachine.pull(randomString);
-        expect(files).to.include(image);
-      });
+        .fill('')
+        .forEach(() => {
+          const randomString = Math.random()
+            .toString(30)
+            .substring(2);
+          const image = slotMachine.pull(randomString);
+          expect(files).to.include(image);
+        });
     });
   });
 
-  describe('initializing with a hashing function', function() {
+  describe('initializing with a hashing function', () => {
     const { sumAndDiff } = require('../../src/lib/hashingFunctions');
     let customSlotMachine = null;
 
-    beforeEach(function() {
+    beforeEach(() => {
       customSlotMachine = new SlotMachine(files, sumAndDiff);
     });
 
-    it('pulls a string to the same image', function() {
+    it('pulls a string to the same image', () => {
       Array(100)
-      .fill('')
-      .forEach(() => {
-        const image = customSlotMachine.pull('string');
-        expect(image).to.equal('file2');
-      });
+        .fill('')
+        .forEach(() => {
+          const image = customSlotMachine.pull('string');
+          expect(image).to.equal('file2');
+        });
     });
 
-    it('pulls to a different string than the default slotMachine', function() {
-      expect(customSlotMachine.pull('string')).not.to.equal(slotMachine.pull('string'));
+    it('pulls to a different string than the default slotMachine', () => {
+      expect(customSlotMachine.pull('string')).not.to.equal(
+        slotMachine.pull('string'),
+      );
     });
 
-    it('pulls to different strings', function() {
-      expect(customSlotMachine.pull('string')).not.to.equal(customSlotMachine.pull('foo'));
+    it('pulls to different strings', () => {
+      expect(customSlotMachine.pull('string')).not.to.equal(
+        customSlotMachine.pull('foo'),
+      );
     });
   });
 });

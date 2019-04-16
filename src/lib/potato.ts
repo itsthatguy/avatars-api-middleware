@@ -12,7 +12,7 @@ const colors = [
   '#6ff2c5',
   '#f0da5e',
   '#eb5972',
-  '#f6be5d'
+  '#f6be5d',
 ];
 
 class Potato {
@@ -20,7 +20,7 @@ class Potato {
     private colorMachine = new SlotMachine(colors),
     private eyesMachine = new SlotMachine(allPaths('eyes')),
     private noseMachine = new SlotMachine(allPaths('nose')),
-    private mouthMachine = new SlotMachine(allPaths('mouth'), sumAndDiff)
+    private mouthMachine = new SlotMachine(allPaths('mouth'), sumAndDiff),
   ) {}
 
   // Construct Faces Parts
@@ -29,7 +29,7 @@ class Potato {
       color: this.colorMachine.pull(string),
       eyes: this.eyesMachine.pull(string),
       nose: this.noseMachine.pull(string),
-      mouth: this.mouthMachine.pull(string)
+      mouth: this.mouthMachine.pull(string),
     };
   }
 }
