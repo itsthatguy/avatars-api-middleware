@@ -17,6 +17,9 @@
   "author": "",
   "license": "MIT",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "express": "^4.16.4",
     "gm": "^1.16.0",
