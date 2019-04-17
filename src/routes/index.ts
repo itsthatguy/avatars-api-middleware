@@ -2,13 +2,18 @@ import Router from 'express';
 import uuid from 'uuid';
 
 import { allNames, pathFor } from '../lib/imageFiles';
-import common from './common';
 import { combine } from '../lib/imager';
 import potato from '../lib/potato';
 
 const partTypes = ['eyes', 'nose', 'mouth'];
 
 const router = Router();
+
+const sendImage = ({ stdout, response }) => {
+  response.setHeader('Expires', new Date(Date.now() + 604800000));
+  response.setHeader('Content-Type', 'image/png');
+  stdout.pipe(response);
+};
 
 router.param('id', (req, res, next, id) => {
   const faceParts = potato.parts(id);
@@ -32,16 +37,16 @@ router.get('/:size?/random', (req, res) => {
   // @ts-ignore
   req.faceParts = faceParts;
 
-  return combine(faceParts, req.params.size, (err, stdout) => {
-    return common.sendImage(err, stdout, req, res);
-  });
+  return combine(faceParts, req.params.size, (err, stdout) =>
+    sendImage({ stdout, response: res }),
+  );
 });
 
 router.get('/:size?/:id', (req, res, next) => {
   // @ts-ignore
-  return combine(req.faceParts, req.params.size, (err, stdout) => {
-    return common.sendImage(err, stdout, req, res, next);
-  });
+  return combine(req.faceParts, req.params.size, (err, stdout) =>
+    sendImage({ stdout, response: res }),
+  );
 });
 
 router.get('/face/:eyes/:nose/:mouth/:color/:size?', (req, res, next) => {
@@ -63,9 +68,9 @@ router.get('/face/:eyes/:nose/:mouth/:color/:size?', (req, res, next) => {
     faceParts[type] = pathFor(type, fileName);
   });
 
-  return combine(faceParts, req.params.size, (err, stdout) => {
-    return common.sendImage(err, stdout, req, res, next);
-  });
+  return combine(faceParts, req.params.size, (err, stdout) =>
+    sendImage({ stdout, response: res }),
+  );
 });
 
 export default router;
