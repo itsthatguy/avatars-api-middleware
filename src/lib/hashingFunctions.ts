@@ -1,29 +1,10 @@
-const _addition = (a, b) => {
-  return a + b;
-};
+const isEven: (num: number) => boolean = num => num % 2 === 0;
 
-const _subtraction = (a, b) => {
-  return a - b;
-};
+export const sum: (array: number[]) => number = arr =>
+  arr.reduce((a, b) => a + b, 0);
 
-const _multiplication = (a, b) => {
-  return a * b;
-};
-
-export const sum = array => {
-  return array.reduce(_addition, 0);
-};
-
-export const sumAndDiff = array => {
-  return array.reduce((prev, curr, index) => {
-    if (index % 2 === 0) {
-      return _addition(prev, curr);
-    } else {
-      return _subtraction(prev, curr);
-    }
-  }, 0);
-};
-
-export const product = array => {
-  return array.reduce(_multiplication, 1);
-};
+export const sumAndDiff: (array: number[]) => number = array =>
+  array.reduce(
+    (prev, curr, index) => (isEven(index) ? prev + curr : prev - curr),
+    0,
+  );
