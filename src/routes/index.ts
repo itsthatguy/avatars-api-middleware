@@ -1,11 +1,11 @@
 import Router from 'express';
 import uuid from 'uuid';
 
-import { allNames, pathFor } from '../lib/imageFiles';
+import { allNames, pathTo } from '../lib/imageFiles';
 import { combine } from '../lib/imager';
 import potato from '../lib/potato';
 
-const partTypes = ['eyes', 'nose', 'mouth'];
+const imageTypes: ImageType[] = ['eyes', 'nose', 'mouth'];
 
 const router = Router();
 
@@ -16,13 +16,10 @@ const sendImage = ({ stdout, response }) => {
 };
 
 router.get('/list', (req, res) => {
-  const response = { face: {} };
+  const face = {};
+  imageTypes.forEach(type => (face[type] = allNames(type)));
 
-  partTypes.forEach(type => {
-    response.face[type] = allNames(type);
-  });
-
-  return res.set('Content-Type', 'application/json').send(response);
+  return res.set('Content-Type', 'application/json').send({ face });
 });
 
 router.get('/:size?/random', (req, res) => {
@@ -42,22 +39,20 @@ router.get('/:size?/:id', (req, res, next) => {
 });
 
 router.get('/face/:eyes/:nose/:mouth/:color/:size?', (req, res, next) => {
-  const faceParts = { color: '#' + req.params.color };
+  const faceParts = { color: `#${req.params.color}` };
 
-  partTypes.forEach(type => {
-    const possibleFileNames = allNames(type);
-    const requestedFileName = req.params[type];
+  imageTypes.forEach(type => {
+    const requestedName = req.params[type];
+    const names = allNames(type);
+    let name = names[0];
 
-    let fileName;
-    if (possibleFileNames.includes(requestedFileName)) {
-      fileName = requestedFileName;
-    } else if (requestedFileName === 'x') {
-      fileName = '';
-    } else {
-      fileName = possibleFileNames[0];
+    if (names.includes(requestedName)) {
+      name = requestedName;
+    } else if (requestedName === 'x') {
+      name = '';
     }
 
-    faceParts[type] = pathFor(type, fileName);
+    faceParts[type] = pathTo(type, name);
   });
 
   return combine(faceParts, req.params.size, (err, stdout) =>
