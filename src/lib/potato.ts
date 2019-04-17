@@ -1,7 +1,13 @@
-// our libs
 import { sumAndDiff } from './hashingFunctions';
 import { allPaths } from './imageFiles';
 import SlotMachine from './slotMachine';
+
+export interface FaceParts {
+  color: string;
+  eyes: string;
+  nose: string;
+  mouth: string;
+}
 
 const colors = [
   '#81bef1',
@@ -23,8 +29,7 @@ class Potato {
     private mouthMachine = new SlotMachine(allPaths('mouth'), sumAndDiff),
   ) {}
 
-  // Construct Faces Parts
-  parts(string) {
+  parts(string): FaceParts {
     return {
       color: this.colorMachine.pull(string),
       eyes: this.eyesMachine.pull(string),

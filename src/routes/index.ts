@@ -15,13 +15,6 @@ const sendImage = ({ stdout, response }) => {
   stdout.pipe(response);
 };
 
-router.param('id', (req, res, next, id) => {
-  const faceParts = potato.parts(id);
-  // @ts-ignore
-  req.faceParts = faceParts;
-  return next();
-});
-
 router.get('/list', (req, res) => {
   const response = { face: {} };
 
@@ -41,8 +34,9 @@ router.get('/:size?/random', (req, res) => {
 });
 
 router.get('/:size?/:id', (req, res, next) => {
-  // @ts-ignore
-  return combine(req.faceParts, req.params.size, (err, stdout) =>
+  const faceParts = potato.parts(req.params.id);
+
+  return combine(faceParts, req.params.size, (err, stdout) =>
     sendImage({ stdout, response: res }),
   );
 });
