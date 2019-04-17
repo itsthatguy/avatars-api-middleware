@@ -1,0 +1,46 @@
+{
+  "extends": ["tslint:latest", "tslint-config-prettier"],
+  "rulesDirectory": ["tslint-plugin-prettier"],
+  "rules": {
+    "prettier": true,
+    "no-console": [false],
+    "quotemark": [true, "single"],
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
+    ],
+    "only-arrow-functions": [true, "allow-named-functions"],
+    "arrow-parens": false,
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-pascal-case",
+      "allow-leading-underscore"
+    ],
+    "switch-default": false,
+    "member-access": false,
+    "ordered-imports": [false],
+    "object-literal-sort-keys": false,
+    "no-unused-expression": [
+      true,
+      "allow-fast-null-checks",
+      "allow-tagged-template"
+    ],
+    "no-shadowed-variable": [true, { "underscore": false }],
+    "max-classes-per-file": [true, 1],
+    "object-literal-key-quotes": [true, "as-needed"],
+    "no-object-literal-type-assertion": false,
+    "member-ordering": [
+      true,
+      {
+        "order": "statics-first"
+      }
+    ],
+    "no-submodule-imports": false,
+    "interface-name": [true, "never-prefix"]
+  }
+}
