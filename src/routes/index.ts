@@ -34,8 +34,6 @@ router.get('/list', (req, res) => {
 
 router.get('/:size?/random', (req, res) => {
   const faceParts = potato.parts(uuid.v4());
-  // @ts-ignore
-  req.faceParts = faceParts;
 
   return combine(faceParts, req.params.size, (err, stdout) =>
     sendImage({ stdout, response: res }),
