@@ -6,17 +6,18 @@
     "node": "9.4.x"
   },
   "scripts": {
-    "test": "mocha --exit",
+    "test": "TS_NODE_FILES=true mocha --exit",
     "build": "tsc && npm run build:assets",
     "build:assets": "cp -r {src,dist}/img",
     "dev": "concurrently --kill-others --prefix=name --names=server,eslint --prefix-colors=green,magenta \"npm run dev:server\" \"npm run dev:lint\"",
-    "dev:server": "onchange -i -k 'src/**/*.ts' -- ts-node test/server.ts",
+    "dev:server": "TS_NODE_FILES=true onchange -i -k 'src/**/*.ts' -- ts-node test/server.ts",
     "dev:lint": "onchange -i -k 'src/**/*.ts' -- tslint -t stylish 'src/**/*.ts'",
     "prepublishOnly": "npm run build"
   },
   "author": "",
   "license": "MIT",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],

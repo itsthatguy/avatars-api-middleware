@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import favicon from 'serve-favicon';
 
-import avatarsRoutes from '../src/routes/avatars';
+import avatarsRoutes from '../src/routes';
 
 const app = express();
 const port = Number(process.env.PORT) || 3002;

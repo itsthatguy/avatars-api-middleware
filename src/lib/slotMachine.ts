@@ -1,29 +1,25 @@
 import { sum } from './hashingFunctions';
 
 class SlotMachine<T> {
-  private slots: T[];
   private numSlots: number;
-  private hashingFn: (items: number[]) => number;
 
-  constructor(slots: T[], hashingFn?) {
-    this.slots = slots;
-    this.numSlots = this.slots.length;
-    this.hashingFn = hashingFn || sum;
+  constructor(private slots: T[], private hash = sum) {
+    this.numSlots = slots.length;
   }
 
   pull(string) {
     const str = string.replace(/\.(png|jpg|gif|)$/g, '');
     const stringArray = str.split('');
-    return this.slots[this._indexFor(stringArray)];
+    return this.slots[this.indexFor(stringArray)];
   }
 
-  _indexFor(array) {
-    const intArray = array.map(this._getCharInt);
-    const index = (this.hashingFn(intArray) + intArray.length) % this.numSlots;
+  private indexFor(array) {
+    const intArray = array.map(this.getCharInt);
+    const index = (this.hash(intArray) + intArray.length) % this.numSlots;
     return Math.abs(index);
   }
 
-  _getCharInt(char) {
+  private getCharInt(char) {
     return parseInt(char.charCodeAt(0) || 0, 10);
   }
 }

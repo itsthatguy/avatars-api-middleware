@@ -1,4 +1,3 @@
-// our libs
 import { sumAndDiff } from './hashingFunctions';
 import { allPaths } from './imageFiles';
 import SlotMachine from './slotMachine';
@@ -23,8 +22,7 @@ class Potato {
     private mouthMachine = new SlotMachine(allPaths('mouth'), sumAndDiff),
   ) {}
 
-  // Construct Faces Parts
-  parts(string) {
+  parts(string): Face {
     return {
       color: this.colorMachine.pull(string),
       eyes: this.eyesMachine.pull(string),
