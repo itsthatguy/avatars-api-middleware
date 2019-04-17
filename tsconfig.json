@@ -9,5 +9,5 @@
     "outDir": "dist",
     "baseUrl": "."
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "index.d.ts"]
 }
