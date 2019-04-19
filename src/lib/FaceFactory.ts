@@ -1,7 +1,7 @@
 import { Hash, hashFactory, sumAndDiff } from 'avatars-utils';
 import { eyeImages, noseImages, mouthImages } from './imageFiles';
 
-export class Potato {
+export class FaceFactory {
   private colorHash: Hash<string>;
   private eyeHash: Hash<string>;
   private noseHash: Hash<string>;
@@ -19,7 +19,7 @@ export class Potato {
     this.mouthHash = new Hash(mouths, hashFactory(sumAndDiff));
   }
 
-  public parts(string): Face {
+  public create(string): Face {
     return {
       color: this.colorHash.get(string),
       eyes: this.eyeHash.get(string),
@@ -41,4 +41,9 @@ const defaultColors = [
   '#f6be5d',
 ];
 
-export default new Potato(defaultColors, eyeImages, noseImages, mouthImages);
+export default new FaceFactory(
+  defaultColors,
+  eyeImages,
+  noseImages,
+  mouthImages,
+);

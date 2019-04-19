@@ -3,7 +3,7 @@ import uuid from 'uuid';
 
 import { imageFileNames, imageFilePaths } from '../lib/imageFiles';
 import { combine } from '../lib/imager';
-import potato from '../lib/potato';
+import FaceFactory from '../lib/FaceFactory';
 
 const imageTypes: ImageType[] = ['eyes', 'nose', 'mouth'];
 
@@ -23,17 +23,17 @@ router.get('/list', (req, res) => {
 });
 
 router.get('/:size?/random', (req, res) => {
-  const faceParts = potato.parts(uuid.v4());
+  const face = FaceFactory.create(uuid.v4());
 
-  return combine(faceParts, req.params.size, (err, stdout) =>
+  return combine(face, req.params.size, (err, stdout) =>
     sendImage({ stdout, response: res }),
   );
 });
 
 router.get('/:size?/:id', (req, res, next) => {
-  const faceParts = potato.parts(req.params.id);
+  const face = FaceFactory.create(req.params.id);
 
-  return combine(faceParts, req.params.size, (err, stdout) =>
+  return combine(face, req.params.size, (err, stdout) =>
     sendImage({ stdout, response: res }),
   );
 });
