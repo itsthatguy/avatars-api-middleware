@@ -1,23 +1,14 @@
-import fs from 'fs';
 import path from 'path';
+import { filePaths, fileNames } from 'avatars-utils';
 
-const IMAGE_DIR = path.join(__dirname, '..', 'img');
+const imageDir = path.join(__dirname, '..', 'img');
 
-const imageFiles: (path: string) => string[] = p =>
-  fs.readdirSync(p).filter(fileName => fileName.match(/\.png$/));
+export const imageFilePaths = (type: string): string[] =>
+  filePaths(path.join(imageDir, type));
 
-const imageDir: (type: ImageType) => string = type =>
-  type ? path.join(IMAGE_DIR, type) : IMAGE_DIR;
+export const imageFileNames = (type: string): string[] =>
+  fileNames(path.join(imageDir, type));
 
-export const allNames: (type: ImageType) => string[] = type =>
-  imageFiles(imageDir(type)).map(imageFileName =>
-    imageFileName.replace(/\.png/, ''),
-  );
-
-export const allPaths: (type: ImageType) => string[] = type => {
-  const dir = imageDir(type);
-  return imageFiles(dir).map(file => path.join(dir, file));
-};
-
-export const pathTo: (type: ImageType, name: string) => string = (type, name) =>
-  path.join(imageDir(type), name + '.png');
+export const eyeImages = imageFilePaths('eyes');
+export const noseImages = imageFilePaths('nose');
+export const mouthImages = imageFilePaths('mouth');

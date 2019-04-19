@@ -1,7 +1,7 @@
 import Router from 'express';
 import uuid from 'uuid';
 
-import { allNames, pathTo } from '../lib/imageFiles';
+import { imageFileNames, imageFilePaths } from '../lib/imageFiles';
 import { combine } from '../lib/imager';
 import potato from '../lib/potato';
 
@@ -17,7 +17,7 @@ const sendImage = ({ stdout, response }) => {
 
 router.get('/list', (req, res) => {
   const face = {};
-  imageTypes.forEach(type => (face[type] = allNames(type)));
+  imageTypes.forEach(type => (face[type] = imageFileNames(type)));
 
   return res.set('Content-Type', 'application/json').send({ face });
 });
@@ -43,16 +43,13 @@ router.get('/face/:eyes/:nose/:mouth/:color/:size?', (req, res, next) => {
 
   imageTypes.forEach(type => {
     const requestedName = req.params[type];
-    const names = allNames(type);
-    let name = names[0];
+    const paths = imageFilePaths(type);
+    faceParts[type] =
+      paths.find(path => !!path.match(requestedName)) || paths[0];
 
-    if (names.includes(requestedName)) {
-      name = requestedName;
-    } else if (requestedName === 'x') {
-      name = '';
+    if (requestedName === 'x') {
+      faceParts[type] = '';
     }
-
-    faceParts[type] = pathTo(type, name);
   });
 
   return combine(faceParts, req.params.size, (err, stdout) =>

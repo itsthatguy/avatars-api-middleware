@@ -1,8 +1,35 @@
-import { sumAndDiff } from './hashingFunctions';
-import { allPaths } from './imageFiles';
-import SlotMachine from './slotMachine';
+import { Hash, hashFactory, sumAndDiff } from 'avatars-utils';
+import { eyeImages, noseImages, mouthImages } from './imageFiles';
 
-const colors = [
+export class Potato {
+  private colorHash: Hash<string>;
+  private eyeHash: Hash<string>;
+  private noseHash: Hash<string>;
+  private mouthHash: Hash<string>;
+
+  constructor(
+    colors: string[],
+    eyes: string[],
+    noses: string[],
+    mouths: string[],
+  ) {
+    this.colorHash = new Hash(colors);
+    this.eyeHash = new Hash(eyes);
+    this.noseHash = new Hash(noses);
+    this.mouthHash = new Hash(mouths, hashFactory(sumAndDiff));
+  }
+
+  public parts(string): Face {
+    return {
+      color: this.colorHash.get(string),
+      eyes: this.eyeHash.get(string),
+      nose: this.noseHash.get(string),
+      mouth: this.mouthHash.get(string),
+    };
+  }
+}
+
+const defaultColors = [
   '#81bef1',
   '#ad8bf2',
   '#bff288',
@@ -14,22 +41,4 @@ const colors = [
   '#f6be5d',
 ];
 
-class Potato {
-  constructor(
-    private colorMachine = new SlotMachine(colors),
-    private eyesMachine = new SlotMachine(allPaths('eyes')),
-    private noseMachine = new SlotMachine(allPaths('nose')),
-    private mouthMachine = new SlotMachine(allPaths('mouth'), sumAndDiff),
-  ) {}
-
-  parts(string): Face {
-    return {
-      color: this.colorMachine.pull(string),
-      eyes: this.eyesMachine.pull(string),
-      nose: this.noseMachine.pull(string),
-      mouth: this.mouthMachine.pull(string),
-    };
-  }
-}
-
-export default new Potato();
+export default new Potato(defaultColors, eyeImages, noseImages, mouthImages);
