@@ -24,7 +24,7 @@
   "dependencies": {
     "avatars-utils": "^0.0.3",
     "express": "^4.16.4",
-    "gm": "^1.16.0",
+    "sharp": "^0.22.0",
     "uuid": "^3.3.2"
   },
   "repository": {
@@ -33,10 +33,10 @@
   },
   "devDependencies": {
     "@types/express": "^4.16.1",
-    "@types/gm": "^1.18.2",
     "@types/mocha": "^5.2.6",
     "@types/node": "^11.13.4",
     "@types/serve-favicon": "^2.2.30",
+    "@types/sharp": "^0.22.1",
     "chai": "^4.2.0",
     "concurrently": "^4.1.0",
     "mocha": "^6.1.4",
