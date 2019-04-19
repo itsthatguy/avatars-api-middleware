@@ -1,18 +1,17 @@
-import Router from 'express';
+import Router, { Response } from 'express';
 import uuid from 'uuid';
 
 import { imageFileNames, imageFilePaths } from '../lib/imageFiles';
-import { combine } from '../lib/imager';
+import { combine, resize } from '../lib/imaging';
 import FaceFactory from '../lib/FaceFactory';
 
 const imageTypes: ImageType[] = ['eyes', 'nose', 'mouth'];
 
 const router = Router();
 
-const sendImage = ({ stdout, response }) => {
-  response.setHeader('Expires', new Date(Date.now() + 604800000));
-  response.setHeader('Content-Type', 'image/png');
-  stdout.pipe(response);
+const pngResponse = (response: Response) => {
+  response.setHeader('Expires', new Date(Date.now() + 604800000).toUTCString());
+  return response.type('image/png');
 };
 
 router.get('/list', (req, res) => {
@@ -25,36 +24,33 @@ router.get('/list', (req, res) => {
 router.get('/:size?/random', (req, res) => {
   const face = FaceFactory.create(uuid.v4());
 
-  return combine(face, req.params.size, (err, stdout) =>
-    sendImage({ stdout, response: res }),
-  );
+  return combine(face).pipe(pngResponse(res));
 });
 
 router.get('/:size?/:id', (req, res, next) => {
   const face = FaceFactory.create(req.params.id);
 
-  return combine(face, req.params.size, (err, stdout) =>
-    sendImage({ stdout, response: res }),
-  );
+  combine(face)
+    .pipe(resize(req.params.size))
+    .pipe(pngResponse(res));
 });
 
 router.get('/face/:eyes/:nose/:mouth/:color/:size?', (req, res, next) => {
-  const faceParts = { color: `#${req.params.color}` };
+  const face = { color: `#${req.params.color}` } as Face;
 
   imageTypes.forEach(type => {
     const requestedName = req.params[type];
     const paths = imageFilePaths(type);
-    faceParts[type] =
-      paths.find(path => !!path.match(requestedName)) || paths[0];
+    face[type] = paths.find(path => !!path.match(requestedName)) || paths[0];
 
     if (requestedName === 'x') {
-      faceParts[type] = '';
+      face[type] = '';
     }
   });
 
-  return combine(faceParts, req.params.size, (err, stdout) =>
-    sendImage({ stdout, response: res }),
-  );
+  combine(face)
+    .pipe(resize(req.params.size))
+    .pipe(pngResponse(res));
 });
 
 export default router;
