@@ -3,9 +3,9 @@ import uuid from 'uuid';
 
 import { imageFileNames, imageFilePaths } from '../lib/imageFiles';
 import { combine, resize } from '../lib/imaging';
-import FaceFactory from '../lib/FaceFactory';
+import FaceFactory, { Face } from '../lib/FaceFactory';
 
-const imageTypes: ImageType[] = ['eyes', 'nose', 'mouth'];
+const imageTypes: Array<keyof Face> = ['eyes', 'nose', 'mouth'];
 
 const router = Router();
 

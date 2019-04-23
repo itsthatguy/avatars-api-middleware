@@ -1,4 +1,5 @@
 import sharp from 'sharp';
+import { Face } from './FaceFactory';
 
 export type Size = { height: number; width: number };
 
