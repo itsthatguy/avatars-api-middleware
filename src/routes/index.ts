@@ -22,21 +22,26 @@ router.get('/list', (req, res) => {
 });
 
 router.get('/:size?/random', (req, res) => {
+  const { size } = req.params;
   const face = FaceFactory.create(uuid.v4());
 
-  combine(face).pipe(pngResponse(res));
+  combine(face)
+    .pipe(resize(size))
+    .pipe(pngResponse(res));
 });
 
 router.get('/:size?/:id', (req, res, next) => {
-  const face = FaceFactory.create(req.params.id);
+  const { id, size } = req.params;
+  const face = FaceFactory.create(id);
 
   combine(face)
-    .pipe(resize(req.params.size))
+    .pipe(resize(size))
     .pipe(pngResponse(res));
 });
 
 router.get('/face/:eyes/:nose/:mouth/:color/:size?', (req, res, next) => {
-  const face = { color: `#${req.params.color}` } as Face;
+  const { color, size } = req.params;
+  const face = { color: `#${color}` } as Face;
 
   imageTypes.forEach(type => {
     const requestedName = req.params[type];
@@ -49,7 +54,7 @@ router.get('/face/:eyes/:nose/:mouth/:color/:size?', (req, res, next) => {
   });
 
   combine(face)
-    .pipe(resize(req.params.size))
+    .pipe(resize(size))
     .pipe(pngResponse(res));
 });
 
