@@ -18,13 +18,13 @@ router.get('/list', (req, res) => {
   const face = {};
   imageTypes.forEach(type => (face[type] = imageFileNames(type)));
 
-  return res.set('Content-Type', 'application/json').send({ face });
+  res.set('Content-Type', 'application/json').send({ face });
 });
 
 router.get('/:size?/random', (req, res) => {
   const face = FaceFactory.create(uuid.v4());
 
-  return combine(face).pipe(pngResponse(res));
+  combine(face).pipe(pngResponse(res));
 });
 
 router.get('/:size?/:id', (req, res, next) => {
