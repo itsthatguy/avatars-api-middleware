@@ -1,4 +1,4 @@
-import routes from './routes';
+import router from './router';
 
-export default routes;
-(module as any).exports = routes;
+export default router;
+(module as any).exports = router;
