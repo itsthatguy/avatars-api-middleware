@@ -9,7 +9,7 @@ const clamp = (num: number): number => {
   return Math.min(Math.max(num, minSize), maxSize);
 };
 
-export const toSize = (rawSize: string = ''): Size => {
+export const parseSize = (rawSize: string = ''): Size => {
   const [rawWidth, rawHeight] = rawSize.toLowerCase().split('x');
   const width = clamp(Number(rawWidth) || maxSize);
   const height = Number(rawHeight)
@@ -34,6 +34,6 @@ export const combine = (face: Face) =>
   ]);
 
 export const resize = (rawSize: string) => {
-  const size = toSize(rawSize);
+  const size = parseSize(rawSize);
   return sharp().resize(size.width, size.height);
 };
