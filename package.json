@@ -37,6 +37,7 @@
     "@types/node": "^11.13.4",
     "@types/serve-favicon": "^2.2.30",
     "@types/sharp": "^0.22.1",
+    "@types/supertest": "^2.0.7",
     "chai": "^4.2.0",
     "concurrently": "^4.1.0",
     "mocha": "^6.1.4",
