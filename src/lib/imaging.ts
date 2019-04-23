@@ -1,24 +1,11 @@
 import sharp from 'sharp';
+import { parseSizeFactory } from 'avatars-utils';
 import { Face } from './FaceFactory';
-
-export type Size = { height: number; width: number };
 
 const minSize = 40;
 const maxSize = 400;
 
-const clamp = (num: number): number => {
-  return Math.min(Math.max(num, minSize), maxSize);
-};
-
-export const parseSize = (rawSize: string = ''): Size => {
-  const [rawWidth, rawHeight] = rawSize.toLowerCase().split('x');
-  const width = clamp(Number(rawWidth) || maxSize);
-  const height = Number(rawHeight)
-    ? clamp(Number(rawHeight) || maxSize)
-    : width;
-
-  return { width, height };
-};
+export const parseSize = parseSizeFactory(minSize, maxSize);
 
 export const combine = (face: Face) =>
   sharp({
