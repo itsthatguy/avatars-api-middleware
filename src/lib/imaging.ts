@@ -9,10 +9,12 @@ const clamp = (num: number): number => {
   return Math.min(Math.max(num, minSize), maxSize);
 };
 
-export const toSize = (rawSize: string): Size => {
+export const toSize = (rawSize: string = ''): Size => {
   const [rawWidth, rawHeight] = rawSize.toLowerCase().split('x');
-  const width = clamp(Number(rawWidth) || 0);
-  const height = rawHeight ? clamp(Number(rawHeight) || 0) : width;
+  const width = clamp(Number(rawWidth) || maxSize);
+  const height = Number(rawHeight)
+    ? clamp(Number(rawHeight) || maxSize)
+    : width;
 
   return { width, height };
 };
