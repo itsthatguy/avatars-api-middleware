@@ -22,7 +22,7 @@
     "dist"
   ],
   "dependencies": {
-    "avatars-utils": "^0.0.3",
+    "avatars-utils": "0.0.4",
     "express": "^4.16.4",
     "sharp": "^0.22.0",
     "uuid": "^3.3.2"
