@@ -26,6 +26,7 @@ router.get('/:size?/random', (req, res) => {
   const face = FaceFactory.create(uuid.v4());
 
   combine(face)
+    .png()
     .pipe(resize(size))
     .pipe(pngResponse(res));
 });
@@ -35,6 +36,7 @@ router.get('/:size?/:id', (req, res, next) => {
   const face = FaceFactory.create(id);
 
   combine(face)
+    .png()
     .pipe(resize(size))
     .pipe(pngResponse(res));
 });
@@ -54,6 +56,7 @@ router.get('/face/:eyes/:nose/:mouth/:color/:size?', (req, res, next) => {
   });
 
   combine(face)
+    .png()
     .pipe(resize(size))
     .pipe(pngResponse(res));
 });

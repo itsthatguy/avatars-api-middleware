@@ -19,22 +19,19 @@ export const toSize = (rawSize: string = ''): Size => {
   return { width, height };
 };
 
-export const combine = (face: Face) => {
-  return sharp({
+export const combine = (face: Face) =>
+  sharp({
     create: {
       width: maxSize,
       height: maxSize,
       channels: 4,
       background: face.color,
     },
-  })
-    .composite([
-      { input: face.eyes },
-      { input: face.mouth },
-      { input: face.nose },
-    ])
-    .png();
-};
+  }).composite([
+    { input: face.eyes },
+    { input: face.mouth },
+    { input: face.nose },
+  ]);
 
 export const resize = (rawSize: string) => {
   const size = toSize(rawSize);
