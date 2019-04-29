@@ -33,6 +33,7 @@
     "no-shadowed-variable": [true, { "underscore": false }],
     "max-classes-per-file": [true, 1],
     "object-literal-key-quotes": [true, "as-needed"],
+    "interface-over-type-literal": false,
     "no-object-literal-type-assertion": false,
     "member-ordering": [
       true,

@@ -1,6 +1,13 @@
 import { Hash, hashFactory, sumAndDiff } from 'avatars-utils';
 import { eyeImages, noseImages, mouthImages } from './imageFiles';
 
+export interface Face {
+  color: string;
+  eyes: string;
+  nose: string;
+  mouth: string;
+}
+
 export class FaceFactory {
   private colorHash: Hash<string>;
   private eyeHash: Hash<string>;

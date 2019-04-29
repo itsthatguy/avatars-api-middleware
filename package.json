@@ -6,11 +6,11 @@
     "node": "9.4.x"
   },
   "scripts": {
-    "test": "TS_NODE_FILES=true mocha --exit",
+    "test": "mocha --exit",
     "build": "tsc && npm run build:assets",
     "build:assets": "cp -r {src,dist}/img",
-    "dev": "concurrently --kill-others --prefix=name --names=server,eslint --prefix-colors=green,magenta \"npm run dev:server\" \"npm run dev:lint\"",
-    "dev:server": "TS_NODE_FILES=true onchange -i -k 'src/**/*.ts' -- ts-node test/server.ts",
+    "dev": "concurrently --kill-others --prefix=name --names=server,tslint --prefix-colors=green,magenta \"npm run dev:server\" \"npm run dev:lint\"",
+    "dev:server": "onchange -i -k 'src/**/*.ts' -- ts-node test/server.ts",
     "dev:lint": "onchange -i -k 'src/**/*.ts' -- tslint -t stylish 'src/**/*.ts'",
     "prepublishOnly": "npm run build"
   },
@@ -22,9 +22,9 @@
     "dist"
   ],
   "dependencies": {
-    "avatars-utils": "^0.0.3",
+    "avatars-utils": "0.0.4",
     "express": "^4.16.4",
-    "gm": "^1.16.0",
+    "sharp": "^0.22.0",
     "uuid": "^3.3.2"
   },
   "repository": {
@@ -33,10 +33,11 @@
   },
   "devDependencies": {
     "@types/express": "^4.16.1",
-    "@types/gm": "^1.18.2",
     "@types/mocha": "^5.2.6",
     "@types/node": "^11.13.4",
     "@types/serve-favicon": "^2.2.30",
+    "@types/sharp": "^0.22.1",
+    "@types/supertest": "^2.0.7",
     "chai": "^4.2.0",
     "concurrently": "^4.1.0",
     "mocha": "^6.1.4",
