@@ -8,18 +8,9 @@ const maxSize = 400;
 export const parseSize = parseSizeFactory(minSize, maxSize);
 
 export const combine = (face: Face) =>
-  sharp({
-    create: {
-      width: maxSize,
-      height: maxSize,
-      channels: 4,
-      background: face.color,
-    },
-  }).composite([
-    { input: face.eyes },
-    { input: face.mouth },
-    { input: face.nose },
-  ]);
+  sharp(face.eyes)
+    .composite([{ input: face.mouth }, { input: face.nose }])
+    .flatten({ background: face.color });
 
 export const resize = (rawSize: string) => {
   const size = parseSize(rawSize);
