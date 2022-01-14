@@ -7,15 +7,7 @@ This repository contains the [express middleware](https://expressjs.com/en/guide
 Check out [our website](http://avatars.adorable.io/) for more info on (and an interactive demo of) what this service does.
 
 ## How do I use it?
-First, you'll need to install the lone external dependency. Instructions for installing ImageMagick on a wide variety of systems are available at https://github.com/ImageMagick/ImageMagick.
-
-Mac OS X users can install with homebrew:
-
-```bash
-brew install imagemagick
-```
-
-Next, you'll need the `adorable-avatars` package:
+First, you'll need the `adorable-avatars` package:
 
 ```bash
 npm install adorable-avatars --save

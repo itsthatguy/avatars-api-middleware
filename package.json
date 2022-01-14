@@ -3,7 +3,7 @@
   "version": "0.4.1",
   "description": "",
   "engines": {
-    "node": ">= 9.4.x"
+    "node": ">= 10.24.x"
   },
   "scripts": {
     "test": "mocha --exit",
@@ -24,7 +24,7 @@
   "dependencies": {
     "avatars-utils": "0.0.4",
     "express": "^4.16.4",
-    "sharp": "^0.22.0",
+    "sharp": "^0.25.3",
     "uuid": "^3.3.2"
   },
   "repository": {
