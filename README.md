@@ -82,4 +82,7 @@ Please read the [contributors' guide](CONTRIBUTING.md)
 
 ## Open-source Contributors
 
-* [missingdink](https://twitter.com/missingdink): Illustrated the very first avatars! [Check them out!](http://api.adorable.io/avatar/hi_mom)
+* Kevin Altman [twitter @itg](https://twitter.com/itg) [github @itsthaguy](https://github.com/itsthatguy): Creator of Adorable Avatars, service, site, and artwork.
+* Ryland Herrick [github @rylnd](https://github.com/rylnd): Programmer extraordinaire!
+* [twitter @missingdink](https://twitter.com/missingdink): Illustrated the very first avatars! [Check them out!](http://api.adorable.io/avatar/hi_mom)
+
